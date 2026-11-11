@@ -8,6 +8,10 @@ import { fileURLToPath } from "node:url";
 
 const BOT_TOKEN = process.env.BOT_TOKEN || "";
 const DEV = process.env.DEV === "1";
+const APP_URL = (process.env.APP_URL || "").replace(/\/$/, ""); // mis. https://rupa-mine.vercel.app
+const BOT_USERNAME = (process.env.BOT_USERNAME || "").replace(/^@/, ""); // tanpa @
+const APP_SHORT = process.env.APP_SHORT || "";   // opsional: short name dari /newapp
+const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || ""; // acak, huruf/angka/_/- saja
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 // Di Vercel hanya /tmp yang bisa ditulis dan datanya TIDAK permanen. Ganti ke database sungguhan (Upstash/Supabase) sebelum dipakai user.
 const DB_FILE = process.env.VERCEL ? "/tmp/db.json" : path.join(DIR, "db.json");
@@ -60,7 +64,7 @@ const userState = (u) => {
     streak: done || cont ? u.streak : 0, canCheckin: !done,
     nextReward: 10 * Math.min((cont ? u.streak : 0) + 1, 7),
     invited: u.invited.length, refIncome: u.refIncome, userId: u.id, serverNow: Date.now(),
-    wallet: u.wallet ?? null, withdrawn: u.withdrawn || 0, minWithdraw: MIN_WITHDRAW,
+    bot: BOT_USERNAME, appShort: APP_SHORT, wallet: u.wallet ?? null, withdrawn: u.withdrawn || 0, minWithdraw: MIN_WITHDRAW,
     pendingW: db.withdrawals.filter((w) => w.uid === u.id && w.status === "pending").reduce((a, w) => a + w.amount, 0),
   };
 };
@@ -135,6 +139,36 @@ app.post("/admin/withdrawals/:id/:act", admin, (q, r) => {
   else return r.status(400).json({ error: "aksi: done atau reject" });
   save();
   r.json(w);
+});
+
+// ---- Bot Telegram (webhook) ----
+const tgApi = (method, body) =>
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${method}`, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body),
+  }).then((r) => r.json());
+
+app.post("/bot", async (req, res) => {
+  if (!WEBHOOK_SECRET || req.get("x-telegram-bot-api-secret-token") !== WEBHOOK_SECRET) return res.sendStatus(403);
+  const m = req.body?.message;
+  if (m?.text?.startsWith("/start")) {
+    const ref = (m.text.split(" ")[1] || "").replace(/\D/g, ""); // /start <id teman>
+    await tgApi("sendMessage", {
+      chat_id: m.chat.id,
+      text: "Selamat datang di Rupa Mine! Mining berjalan otomatis, klaim kapan saja, dan undang teman untuk bonus 5%.",
+      reply_markup: { inline_keyboard: [[{ text: "Buka Rupa Mine", web_app: { url: APP_URL + (ref ? "?ref=" + ref : "") } }]] },
+    }).catch(() => {});
+  }
+  res.sendStatus(200);
+});
+
+// Buka sekali di browser setelah deploy: https://DOMAIN/setup?key=ADMIN_KEY
+app.get("/setup", admin, async (req, res) => {
+  if (!BOT_TOKEN || !APP_URL || !WEBHOOK_SECRET) return res.status(400).json({ error: "Isi env BOT_TOKEN, APP_URL, dan WEBHOOK_SECRET." });
+  res.json({
+    webhook: await tgApi("setWebhook", { url: APP_URL + "/bot", secret_token: WEBHOOK_SECRET, allowed_updates: ["message"] }),
+    menu: await tgApi("setChatMenuButton", { menu_button: { type: "web_app", text: "Buka Rupa Mine", web_app: { url: APP_URL } } }),
+    commands: await tgApi("setMyCommands", { commands: [{ command: "start", description: "Buka Rupa Mine" }] }),
+  });
 });
 
 if (!process.env.VERCEL) app.listen(process.env.PORT || 3000, () => console.log("Rupa Mine jalan di port", process.env.PORT || 3000));
