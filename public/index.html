@@ -248,7 +248,7 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
 </nav>
 
 <script>
-const BOT_LINK="https://t.me/NAMA_BOT/NAMA_APP"; // ganti dengan link Mini App kamu
+const botUrl=()=>"https://t.me/"+(S?.bot||"NAMA_BOT")+(S?.appShort?"/"+S.appShort:""); // diisi otomatis dari env server
 const tg=window.Telegram?.WebApp; tg?.ready(); tg?.expand();
 tg?.setHeaderColor?.("#07090d"); tg?.setBackgroundColor?.("#07090d");
 const $=s=>document.querySelector(s);
@@ -260,7 +260,7 @@ let S=null, offset=0;
 // ---- API (server) dengan cadangan demo lokal ----
 async function api(path,method="GET",body){
   let r;
-  try{ r=await fetch("/api/"+path,{method,headers:{"x-init-data":tg?.initData||"","x-ref":tg?.initDataUnsafe?.start_param||"","content-type":"application/json"},body:body?JSON.stringify(body):undefined}); }
+  try{ r=await fetch("/api/"+path,{method,headers:{"x-init-data":tg?.initData||"","x-ref":tg?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get("ref")||"","content-type":"application/json"},body:body?JSON.stringify(body):undefined}); }
   catch{ return demoApi(path,body); }
   if(r.status===404) return demoApi(path,body);
   const j=await r.json(); if(!r.ok) throw new Error(j.error); return j;
@@ -281,8 +281,8 @@ function demoApi(path,body){
 }
 
 // ---- Tampilan ----
-const link=()=>`${BOT_LINK}?startapp=${S.userId}`;
-function set(s){S=s;offset=s.serverNow-Date.now();render()}
+const link=()=>S.appShort?`${botUrl()}?startapp=${S.userId}`:`${botUrl()}?start=${S.userId}`;
+function set(s){S=s;offset=s.serverNow-Date.now();try{if(tc&&s.bot)tc.uiOptions={actionsConfiguration:{twaReturnUrl:botUrl()}}}catch{}render()}
 function render(){
   $("#lvl").textContent="Lv "+S.level;
   $("#sh").textContent=fmt(S.rate,2);$("#sd").textContent=fmt(S.rate*24,1);$("#sb").textContent="×"+S.boost.toFixed(2);
@@ -346,7 +346,7 @@ const friendly=a=>{try{return TON_CONNECT_UI.toUserFriendlyAddress(a)}catch{retu
 function walletUI(){const w=S&&S.wallet;$("#w-addr").textContent=w?shortA(w):"Belum terhubung";$("#w-conn").hidden=!!w;$("#w-dis").hidden=!w;$("#w-go").disabled=!w}
 let tc=null;
 try{
-  tc=new TON_CONNECT_UI.TonConnectUI({manifestUrl:location.origin+"/tonconnect-manifest.json",actionsConfiguration:{twaReturnUrl:BOT_LINK}});
+  tc=new TON_CONNECT_UI.TonConnectUI({manifestUrl:location.origin+"/tonconnect-manifest.json",actionsConfiguration:{twaReturnUrl:botUrl()}});
   tc.onStatusChange(w=>{if(w&&S){const a=friendly(w.account.address);if(S.wallet!==a)act("wallet",{address:a})}});
 }catch(e){console.warn("TON Connect tidak tersedia",e)}
 $("#w-conn").onclick=()=>tc?tc.openModal():msg("TON Connect tidak tersedia. Muat ulang halaman.");
