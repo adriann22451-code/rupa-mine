@@ -3,10 +3,14 @@
 import express from "express";
 import crypto from "node:crypto";
 import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const BOT_TOKEN = process.env.BOT_TOKEN || "";
 const DEV = process.env.DEV === "1";
-const DB_FILE = "./db.json"; // ganti ke SQLite/Postgres saat siap produksi
+const DIR = path.dirname(fileURLToPath(import.meta.url));
+// Di Vercel hanya /tmp yang bisa ditulis dan datanya TIDAK permanen. Ganti ke database sungguhan (Upstash/Supabase) sebelum dipakai user.
+const DB_FILE = process.env.VERCEL ? "/tmp/db.json" : path.join(DIR, "db.json");
 const db = fs.existsSync(DB_FILE) ? JSON.parse(fs.readFileSync(DB_FILE)) : { users: {} };
 const save = () => fs.writeFileSync(DB_FILE, JSON.stringify(db));
 
@@ -57,7 +61,8 @@ const userState = (u) => {
 };
 
 const app = express();
-app.use(express.static("public"));
+app.use(express.static(path.join(DIR, "public")));
+app.get("/", (req, res) => res.sendFile(path.join(DIR, "public", "index.html")));
 
 app.use("/api", (req, res, next) => {
   const tg = verify(req.get("x-init-data") || "") ?? (DEV ? { id: 1 } : null);
@@ -87,4 +92,5 @@ app.post("/api/checkin", (req, res) => {
   res.json(userState(u));
 });
 
-app.listen(process.env.PORT || 3000, () => console.log("Rupa Mine jalan di port", process.env.PORT || 3000));
+if (!process.env.VERCEL) app.listen(process.env.PORT || 3000, () => console.log("Rupa Mine jalan di port", process.env.PORT || 3000));
+export default app;
