@@ -20,6 +20,8 @@ svg{display:block}
 .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .brand{display:flex;align-items:center;gap:10px;font:800 21px var(--disp);letter-spacing:-.03em}
 .brand svg{width:34px;height:34px;filter:drop-shadow(0 4px 12px #f2b84b66)}
+.hr{display:flex;align-items:center;gap:10px}
+.mineico{width:42px;height:auto;image-rendering:pixelated;filter:drop-shadow(0 3px 10px #f08a3c66)}
 .lv{border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);background:color-mix(in srgb,var(--acc) 14%,#16101f);border-radius:99px;padding:6px 14px;font-weight:700;font-size:13px;color:var(--acc2)}
 .card{background:linear-gradient(180deg,#1b1427,#140f1d);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:12px;box-shadow:0 12px 32px #0007,inset 0 1px 0 #ffffff0f}
 .card>b,.promo b,.mhead b,.lgi b{font-family:var(--disp);letter-spacing:-.01em}
@@ -63,13 +65,13 @@ nav svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;st
 nav button.on{color:var(--acc2);background:color-mix(in srgb,var(--acc) 15%,#1d1628);box-shadow:inset 0 1px 0 #ffffff12,0 0 18px color-mix(in srgb,var(--acc) 22%,transparent)}
 .tab{display:none}.tab.on{display:block;animation:in .25s ease}
 @keyframes in{from{opacity:0;transform:translateY(6px)}}
-.dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--ember));box-shadow:0 0 10px #f2b84b88}
+.dot{width:20px;height:16px;background:url(/rupa-crystal.png) center/contain no-repeat;filter:drop-shadow(0 0 6px #f2b84b99)}
 .box{background:var(--s2);border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:10px}
 .box .between{align-items:center}
 .box input{background:none;border:0;outline:0;color:var(--text);font:800 26px var(--disp);width:60%;min-width:0;font-variant-numeric:tabular-nums}
 .coin{display:inline-flex;align-items:center;gap:6px;background:#110c19;border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-weight:700;font-size:13px}
-.coin::before{content:"";width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--ember))}
-.coin.ton::before{background:linear-gradient(135deg,#6cc4ff,#2a7fe8)}
+.coin::before{content:"";width:18px;height:14px;background:url(/rupa-crystal.png) center/contain no-repeat;filter:drop-shadow(0 0 4px #f2b84b88)}
+.coin.ton::before{width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#6cc4ff,#2a7fe8);filter:none}
 .quick{display:flex;gap:6px;margin-top:10px}
 .quick button{flex:1;background:#110c19;border:1px solid var(--line);border-radius:12px;color:var(--mute);padding:7px 0;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
 .flip{display:grid;place-items:center;width:40px;height:40px;margin:-6px auto -6px;position:relative;z-index:1;border-radius:50%;border:1px solid var(--line);background:var(--s1);color:var(--gold2);cursor:pointer}
@@ -151,12 +153,12 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
 <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9a93a"/><stop offset="1" stop-color="#a8641a"/></linearGradient>
 <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c98322"/><stop offset="1" stop-color="#6e3b0c"/></linearGradient>
 <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--acc)"/><stop offset="1" style="stop-color:var(--acc2)"/></linearGradient>
-<symbol id="gemS" viewBox="0 0 120 120"><polygon points="42,24 78,24 70,38 50,38" fill="url(#g1)"/><polygon points="42,24 50,38 20,48" fill="#ffe9b0" opacity=".85"/><polygon points="78,24 70,38 100,48" fill="#e9a93a"/><polygon points="50,38 60,48 20,48" fill="url(#g2)"/><polygon points="70,38 100,48 60,48" fill="url(#g3)"/><polygon points="50,38 70,38 60,48" fill="#fff" opacity=".28"/><polygon points="20,48 60,48 60,104" fill="url(#g2)"/><polygon points="100,48 60,48 60,104" fill="url(#g3)"/><polygon points="20,48 42,48 60,104" fill="#fff" opacity=".16"/><polygon points="78,48 100,48 60,104" fill="#000" opacity=".16"/></symbol>
+<symbol id="gemS" viewBox="0 0 120 120"><image href="/rupa-crystal.png" x="0" y="0" width="120" height="120" preserveAspectRatio="xMidYMid meet" style="image-rendering:pixelated"/></symbol>
 </defs></svg>
 
 <header class="top">
   <div class="brand"><svg><use href="#gemS"/></svg>Rupa Mine</div>
-  <div class="lv" id="lvl">Lv –</div>
+  <div class="hr"><div class="lv" id="lvl">Lv –</div><img class="mineico" src="/mine.png" alt="Rupa Mine"></div>
 </header>
 
 <section class="tab on" id="t-mining">
