@@ -133,6 +133,18 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
 @keyframes hop{40%{transform:translateY(-6px)}}
 .hrs{display:flex;justify-content:space-between;align-items:baseline;margin:12px 2px 0}.hrs b{font-size:13px;color:var(--gold)}
 .pwrap{margin-top:14px}
+.sp{position:absolute;left:50%;bottom:24%;width:3px;height:3px;border-radius:50%;background:var(--acc2);opacity:0;box-shadow:-14px 6px 0 var(--acc2),12px 2px 0 var(--acc2)}
+.hero.r1 .cell.on{background:linear-gradient(110deg,transparent 40%,#ffffff22 50%,transparent 60%) 150% 0/250% 100% no-repeat,linear-gradient(160deg,#241a33,#140e1d);animation:sweep calc(3s/var(--rb,1)) linear infinite}
+@keyframes sweep{to{background-position:-50% 0,0 0}}
+.hero.r2 .cell.on .sp{animation:spark calc(2s/var(--rb,1)) ease-out infinite}
+@keyframes spark{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-34px);opacity:0}}
+.hero.r3 .cell.full svg{animation:twinkle 3s ease-in-out infinite calc(var(--i)*.35s)}
+@keyframes twinkle{50%{transform:scale(1.07);filter:drop-shadow(0 0 12px var(--acc2))}}
+.hero.r4::after{content:"";display:block;height:5px;margin-top:10px;border-radius:5px;background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--acc) 70%,transparent) 0 10px,transparent 10px 20px);background-size:20px 100%;animation:belt calc(1.2s/var(--rb,1)) linear infinite}
+@keyframes belt{to{background-position:20px 0}}
+.hero.r5 .bed{animation:bedglow 2.4s ease-in-out infinite}
+.hero.r5 .cell::before{color:var(--acc2)}
+.hero.r5 .cell.full svg{filter:drop-shadow(0 0 14px var(--acc))}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9b0"/><stop offset="1" stop-color="#f0b94a"/></linearGradient>
@@ -155,8 +167,8 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
   </div>
   <div class="card mine">
     <div class="mhead"><i class="ibox"><svg><use href="#gemS"/></svg></i><div><b style="font-size:17px">Active Mining</b><div class="run"><i></i>Running</div></div><span class="pill" id="lgp">Bronze</span></div>
-    <div class="hero" id="hero"><div class="bed" id="bed"><div class="cell" data-h="1h" style="--i:0"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="2h" style="--i:1"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="3h" style="--i:2"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="4h" style="--i:3"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="5h" style="--i:4"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="6h" style="--i:5"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="7h" style="--i:6"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="8h" style="--i:7"><svg><use href="#gemS"/></svg></div></div></div>
-    <div class="hrs"><span class="lbl">Storage filled</span><b class="mono" id="pct">0%</b></div>
+    <div class="hero" id="hero"><div class="bed" id="bed"><div class="cell" data-h="1h" style="--i:0"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="2h" style="--i:1"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="3h" style="--i:2"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="4h" style="--i:3"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="5h" style="--i:4"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="6h" style="--i:5"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="7h" style="--i:6"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="8h" style="--i:7"><i class="sp"></i><svg><use href="#gemS"/></svg></div></div></div>
+    <div class="hrs"><span class="lbl">Storage filled</span><span class="pill sm" id="rg-chip" data-go="rig" style="margin-left:auto;margin-right:10px;cursor:pointer">Rig 0</span><b class="mono" id="pct">0%</b></div>
     <div class="pwrap"><div class="lbl">Unclaimed</div><div><span class="num mono" id="pend">+0.0000</span><span class="unit">RPM</span></div></div>
     <button class="cta" id="claim" disabled>Claim</button>
     <div class="lbl" id="cap" style="text-align:center;margin:8px 0 14px"></div>
@@ -352,6 +364,8 @@ function render(){
 }
 function rigUI(){
   const n=S.rigMax??0,r=S.rig||0,c=S.rigCost;
+  const hr=$("#hero");for(let i=1;i<=5;i++)hr.classList.toggle("r"+i,r>=i);hr.style.setProperty("--rb",S.rigBoost||1);
+  $("#rg-chip").textContent=n&&r>=n?"Rig MAX":"Rig "+r;
   $("#rg-lv").textContent=n?`Level ${r} of ${n}`:"Unavailable";
   $("#rg-b").textContent="×"+(S.rigBoost||1).toFixed(2);
   $("#rigs").innerHTML=Array.from({length:n},(_,i)=>`<div class="st ${i<r?"on":i===r?"next":""}" style="height:${34+i*12}px"></div>`).join("");
