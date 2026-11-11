@@ -122,6 +122,9 @@ nav button.on{color:var(--acc2);background:color-mix(in srgb,var(--acc) 15%,#1d1
 .promo em{font-style:normal;font-weight:800;font-size:13px;color:#06222a;background:linear-gradient(90deg,#5fd4f0,#8af0cf);padding:9px 14px;border-radius:12px;opacity:.55}
 .ch{display:flex;align-items:center;justify-content:center;gap:5px;font-size:13px;color:var(--mute)}.ch svg{margin:0}
 .lg{display:flex;align-items:center;gap:14px}
+.lge{width:66px;height:auto;flex:none;image-rendering:pixelated;filter:drop-shadow(0 6px 14px color-mix(in srgb,var(--acc) 55%,transparent))}
+.lv{display:inline-flex;align-items:center;gap:6px}.lv img{width:24px;height:auto;image-rendering:pixelated}
+.tl .le{width:56px;height:auto;image-rendering:pixelated;flex:none}.tl .lw{display:flex;align-items:center;gap:12px;min-width:0}
 .lgb{display:grid;align-content:center;justify-items:center;width:60px;height:68px;clip-path:polygon(50% 0,100% 16%,100% 68%,50% 100%,0 68%,0 16%);background:linear-gradient(160deg,var(--acc2),var(--acc));flex:none;color:#1a1204;padding-bottom:6px}
 .lgb small{font-size:11px;font-weight:700}.lgb b{font:800 24px/1 var(--disp)}
 .lgi{flex:1;min-width:0;display:grid;gap:3px}.up{color:var(--ok);font-size:13px}
@@ -151,31 +154,33 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
 .plan.on{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,#1d1628)}
 .task>span:first-child{color:var(--text)}.task small{color:var(--mute)}
 .hero{position:relative;margin:16px 0 4px;cursor:pointer}
-.bed{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.cell{--f:0;position:relative;display:grid;place-items:center;aspect-ratio:1;border-radius:18px;border:1px solid var(--line);overflow:hidden;background:linear-gradient(160deg,#241a33,#140e1d);box-shadow:inset 0 6px 14px #0009}
-.cell::before{content:attr(data-h);position:absolute;left:9px;top:6px;font:600 10px "JetBrains Mono",monospace;color:#9a90ab99}
-.cell::after{content:"";position:absolute;left:12%;right:12%;bottom:7px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform-origin:left;transform:scaleX(var(--f));opacity:.9}
-.cell svg{width:66%;height:66%;transform:scale(calc(.3 + .7*var(--f)));opacity:calc(.2 + .8*var(--f));filter:grayscale(calc(1 - var(--f))) drop-shadow(0 6px 10px #f2b84b55)}
-.cell.on{border-color:color-mix(in srgb,var(--acc) 65%,transparent)}
-.cell.full{border-color:color-mix(in srgb,var(--acc) 55%,transparent);background:radial-gradient(circle at 50% 115%,color-mix(in srgb,var(--acc) 26%,transparent),transparent 70%),linear-gradient(160deg,#2a2036,#160f20)}
-.bed.full{animation:bedglow 2.4s ease-in-out infinite}
-@keyframes bedglow{50%{filter:drop-shadow(0 0 14px color-mix(in srgb,var(--acc) 35%,transparent))}}
-.bed.tap .cell,.bed.harvest .cell{animation:hop .45s ease calc(var(--i)*40ms)}
-@keyframes hop{40%{transform:translateY(-6px)}}
+.bed{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--line);padding:14px 0 0;background:radial-gradient(70% 55% at 50% 100%,#4a2f7a66,transparent 75%),linear-gradient(#171022,#0f0a18)}
+.wrap{position:relative;width:210px;height:188px;margin:0 auto;animation:rumble .5s steps(2) infinite;transform-origin:50% 100%}
+.wrap>img.cart{position:absolute;left:0;bottom:8px;width:210px;height:114px;image-rendering:pixelated}
+.pile{position:absolute;inset:0}
+.cr{position:absolute;width:52px;height:auto;image-rendering:pixelated;transform-origin:50% 100%;transform:rotate(var(--r,0deg)) scale(calc(.25 + .75*var(--f,0)));opacity:calc(var(--f,0)*2);filter:drop-shadow(0 3px 5px #0008)}
+.bed.full .cr,.hero.r5 .cr.full{filter:drop-shadow(0 0 9px var(--acc))}
+.rail{position:relative;height:16px;margin-top:-8px;background:repeating-linear-gradient(90deg,#4a3220 0 12px,transparent 12px 24px) 0 5px/24px 11px no-repeat repeat-x;animation:belt calc(2.4s/var(--rb,1)) linear infinite}
+.rail::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(#b79ad1,#6d5590)}
+.bed.full .rail,.bed.full .wrap{animation-play-state:paused}
+@keyframes belt{to{background-position:-24px 5px}}
+@keyframes rumble{50%{transform:translateY(-1px)}}
+@keyframes hop{40%{transform:translateY(-7px)}}
+@keyframes dump{25%,65%{transform:rotate(-8deg)}}
+.bed.tap .wrap{animation:hop .45s ease}
+.bed.harvest .wrap{animation:dump .9s ease}
+.cr.fly{opacity:1;pointer-events:none;animation:fly .9s ease-in forwards}
+@keyframes fly{0%{opacity:1;transform:translate(0,0) rotate(var(--r,0deg)) scale(1)}100%{opacity:0;transform:translate(var(--tx,30px),-190px) rotate(40deg) scale(.3)}}
+.sp{position:absolute;left:50%;bottom:160px;width:3px;height:3px;border-radius:50%;background:var(--acc2);opacity:0;box-shadow:-40px 6px 0 var(--acc2),38px 2px 0 var(--acc2),6px -6px 0 var(--acc2)}
+.hero.r1 .cart{animation:cshine calc(3.2s/var(--rb,1)) ease-in-out infinite}
+@keyframes cshine{50%{filter:brightness(1.3) saturate(1.1)}}
+.hero.r2 .sp{animation:spark calc(2s/var(--rb,1)) ease-out infinite}
+@keyframes spark{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-34px);opacity:0}}
+.hero.r3 .cr.full{animation:twinkle 3s ease-in-out infinite calc(var(--i,0)*.35s)}
+@keyframes twinkle{50%{filter:drop-shadow(0 0 12px var(--acc2)) brightness(1.2)}}
+.hero.r4 .wrap::before{content:"";position:absolute;inset:-6px -34px 0;background:radial-gradient(60% 60% at 50% 70%,color-mix(in srgb,var(--acc) 38%,transparent),transparent 72%);pointer-events:none}
 .hrs{display:flex;justify-content:space-between;align-items:baseline;margin:12px 2px 0}.hrs b{font-size:13px;color:var(--gold)}
 .pwrap{margin-top:14px}
-.sp{position:absolute;left:50%;bottom:24%;width:3px;height:3px;border-radius:50%;background:var(--acc2);opacity:0;box-shadow:-14px 6px 0 var(--acc2),12px 2px 0 var(--acc2)}
-.hero.r1 .cell.on{background:linear-gradient(110deg,transparent 40%,#ffffff22 50%,transparent 60%) 150% 0/250% 100% no-repeat,linear-gradient(160deg,#241a33,#140e1d);animation:sweep calc(3s/var(--rb,1)) linear infinite}
-@keyframes sweep{to{background-position:-50% 0,0 0}}
-.hero.r2 .cell.on .sp{animation:spark calc(2s/var(--rb,1)) ease-out infinite}
-@keyframes spark{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-34px);opacity:0}}
-.hero.r3 .cell.full svg{animation:twinkle 3s ease-in-out infinite calc(var(--i)*.35s)}
-@keyframes twinkle{50%{transform:scale(1.07);filter:drop-shadow(0 0 12px var(--acc2))}}
-.hero.r4::after{content:"";display:block;height:5px;margin-top:10px;border-radius:5px;background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--acc) 70%,transparent) 0 10px,transparent 10px 20px);background-size:20px 100%;animation:belt calc(1.2s/var(--rb,1)) linear infinite}
-@keyframes belt{to{background-position:20px 0}}
-.hero.r5 .bed{animation:bedglow 2.4s ease-in-out infinite}
-.hero.r5 .cell::before{color:var(--acc2)}
-.hero.r5 .cell.full svg{filter:drop-shadow(0 0 14px var(--acc))}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9b0"/><stop offset="1" stop-color="#f0b94a"/></linearGradient>
@@ -198,7 +203,7 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
   </div>
   <div class="card mine">
     <div class="mhead"><i class="ibox"><svg><use href="#gemS"/></svg></i><div><b style="font-size:17px">Active Mining</b><div class="run"><i></i>Running</div></div><span class="pill" id="lgp">Bronze</span></div>
-    <div class="hero" id="hero"><div class="bed" id="bed"><div class="cell" data-h="1h" style="--i:0"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="2h" style="--i:1"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="3h" style="--i:2"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="4h" style="--i:3"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="5h" style="--i:4"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="6h" style="--i:5"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="7h" style="--i:6"><i class="sp"></i><svg><use href="#gemS"/></svg></div><div class="cell" data-h="8h" style="--i:7"><i class="sp"></i><svg><use href="#gemS"/></svg></div></div></div>
+    <div class="hero" id="hero"><div class="bed" id="bed"><div class="wrap" id="wrap"><div class="pile" id="pile"></div><img class="cart" src="/cart.png" alt=""><i class="sp"></i></div><div class="rail"></div></div></div>
     <div class="hrs"><span class="lbl">Storage filled</span><span class="pill sm" id="rg-chip" data-go="rig" style="margin-left:auto;margin-right:10px;cursor:pointer">Rig 0</span><b class="mono" id="pct">0%</b></div>
     <div class="pwrap"><div class="lbl">Unclaimed</div><div><span class="num mono" id="pend">+0.0000</span><span class="unit">RPM</span></div></div>
     <button class="cta" id="claim" disabled>Claim</button>
@@ -212,7 +217,7 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
     <div class="chip"><span class="ch"><svg viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Boost</span><b id="sb">–</b><span>multiplier</span></div>
   </div>
   <div class="card lg">
-    <div class="lgb"><small>Level</small><b id="lgb">1</b></div>
+    <img class="lge" id="lgimg" src="/league-1.png" alt="">
     <div class="lgi"><div style="display:flex;align-items:center;gap:8px"><b style="font-size:17px" id="lgn">League Bronze</b><span class="pill sm" id="lgl">Lv 1</span></div>
       <div class="lbl">Total mined: <b class="mono" id="lgt" style="color:var(--ok)">0</b> RPM</div>
       <div class="up"><svg viewBox="0 0 24 24" width="14" height="14" style="display:inline;vertical-align:-2px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg> Determines your level and speed</div></div>
@@ -382,11 +387,11 @@ const link=()=>S.appShort?`${botUrl()}?startapp=${S.userId}`:`${botUrl()}?start=
 function set(s){S=s;offset=s.serverNow-Date.now();try{if(tc&&s.bot)tc.uiOptions={actionsConfiguration:{twaReturnUrl:botUrl()}}}catch{}render()}
 function render(){
   document.body.dataset.lv=S.level;
-  $("#lvl").textContent="Lv "+S.level;
+  $("#lvl").innerHTML=`<img src="/league-${Math.min(S.level,6)}.png" alt="">Lv ${S.level}`;
   $("#sh").textContent=fmt(S.rate,2);$("#sd").textContent=fmt(S.rate*24,1);$("#sb").textContent="×"+S.boost.toFixed(2);
   $("#bal").textContent=fmt(S.balance);$("#wbal").textContent=fmt(S.balance,2);$("#w-wd").textContent=fmt(S.withdrawn||0,2);$("#w-pw").textContent=fmt(S.pendingW||0,2);$("#w-min").textContent="Minimum "+(S.minWithdraw||100)+" RPM";walletUI();
   const LG=["Bronze","Silver","Gold","Platinum","Diamond","Legend"],ln=LG[Math.min(S.level,6)-1];
-  $("#lgp").textContent=ln;$("#lgn").textContent="League "+ln;$("#lgb").textContent=S.level;$("#lgl").textContent="Lv "+S.level;$("#lgt").textContent=fmt(S.total,2);
+  $("#lgp").textContent=ln;$("#lgn").textContent="League "+ln;$("#lgimg").src="/league-"+Math.min(S.level,6)+".png";$("#lgl").textContent="Lv "+S.level;$("#lgt").textContent=fmt(S.total,2);
   if(S.nextAt==null){$("#fill").style.width="100%";$("#lvpct").textContent="Max";$("#lvltxt").textContent="Max level";}
   else{const p=Math.min(100,(S.total-S.prevAt)/(S.nextAt-S.prevAt)*100);
     $("#fill").style.width=p+"%";$("#lvpct").textContent=Math.floor(p)+"%";
@@ -434,11 +439,16 @@ function ambUI(){
   $("#am-list").innerHTML=A.ranks.map((r,i)=>`<div class="task"><span>${r.name}<br><small>${r.need} active friends · ${Math.round(r.share*100)}% bonus</small></span><span class="tag">${i<=A.rank?"Reached":"Locked"}</span></div>`).join("");
 }
 function taskUI(){const c=S.channel;$("#tc-n").textContent=c?"@"+c:"Not set";$("#tc-open").hidden=!c;$("#tc-go").disabled=!c||!!S.taskChannel;$("#tc-go").textContent=S.taskChannel?"Done":"Claim 30"}
-const cells=[...document.querySelectorAll("#bed .cell")];
+// Gerobak tambang: 8 kristal = 8 jam penyimpanan (kiri-kanan, baris bawah ke atas)
+const POS=[[6,116,-5],[54,116,3],[104,116,-3],[152,116,5],[30,128,4],[80,128,-4],[128,128,3],[80,140,-2]];
+const pile=$("#pile");
+const crs=POS.map((p,i)=>{const e=document.createElement("img");e.className="cr";e.src="/rupa-crystal.png";e.alt="";e.style.cssText=`left:${p[0]}px;bottom:${p[1]}px;--r:${p[2]}deg;--i:${i};--f:0`;pile.append(e);return e});
 function bedUI(h){
-  cells.forEach((c,i)=>{const f=Math.max(0,Math.min(1,h-i));c.style.setProperty("--f",f.toFixed(3));c.classList.toggle("full",f>=1);c.classList.toggle("on",f>0&&f<1)});
+  crs.forEach((c,i)=>{const f=Math.max(0,Math.min(1,h-i));c.style.setProperty("--f",f.toFixed(3));c.classList.toggle("full",f>=1);c.classList.toggle("on",f>0&&f<1)});
   $("#bed").classList.toggle("full",h>=S.maxHours);
 }
+// Saat Claim: salin kristal yang terisi, lalu terbangkan setelah klaim berhasil
+const flyers=()=>crs.filter(c=>+c.style.getPropertyValue("--f")>=.5).map((c,i)=>{const k=c.cloneNode(true);k.classList.remove("full","on");k.classList.add("fly");k.style.setProperty("--tx",(Math.random()*110-30).toFixed(0)+"px");k.style.animationDelay=(i*40)+"ms";return k});
 function wave(c){const b=$("#bed");b.classList.remove("tap","harvest");void b.offsetWidth;b.classList.add(c);setTimeout(()=>b.classList.remove(c),900)}
 function tick(){
   if(!S)return;
@@ -453,7 +463,7 @@ async function act(path,body){
   try{set(await api(path,"POST",body));return true}catch(e){tg?.showAlert?tg.showAlert(e.message):alert(e.message);return false}
 }
 function burst(t){const e=document.createElement("div");e.className="burst";e.textContent=t;$(".hero").append(e);setTimeout(()=>e.remove(),1100)}
-$("#claim").onclick=async()=>{const t=$("#pend").textContent;if(await act("claim")){tg?.HapticFeedback?.notificationOccurred("success");wave("harvest");burst(t+" RPM")}};
+$("#claim").onclick=async()=>{const t=$("#pend").textContent,fl=flyers();if(await act("claim")){tg?.HapticFeedback?.notificationOccurred("success");wave("harvest");fl.forEach(k=>{pile.append(k);setTimeout(()=>k.remove(),1300)});burst(t+" RPM")}};
 $("#checkin").onclick=()=>act("checkin");
 $("#rg-up").onclick=async()=>{if(await act("rig"))tg?.HapticFeedback?.notificationOccurred("success")};
 $("#tk-go").onclick=()=>act("task/invite");
@@ -559,7 +569,7 @@ function tutHTML(){
   const pl=plans.map(x=>`${x.days} ${dd} (+${x.pct}%)`).join(", ").replace(/, ([^,]*)$/," "+and+" $1");
   if(tTab===0) return T.g.map((x,i)=>`<div class="ts"><i>${i+1}</i><div><b>${x[0]}</b><p>${x[1]}</p></div></div>`).join("")+`<div class="tn">${T.tip}</div>`;
   if(tTab===1){
-    const lg=LGN.map((nm,i)=>{const r=10*(1+i*.25);return `<div class="tl${cur===i+1?" cur":""}"><div><b>Lv ${i+1} · ${nm}</b>${cur===i+1?`<span class="pill sm">${T.you}</span>`:""}<small>${T.from} ${fmt(LGT[i],0)} RPM</small></div><div class="tr"><b>×${(1+i*.25).toFixed(2)}</b><small>${nf(r)} RPM/${T.h}<br>${T.max} ${nf(r*8)}</small></div></div>`}).join("");
+    const lg=LGN.map((nm,i)=>{const r=10*(1+i*.25);return `<div class="tl${cur===i+1?" cur":""}"><div class="lw"><img class="le" src="/league-${i+1}.png" alt=""><div><b>Lv ${i+1} · ${nm}</b>${cur===i+1?`<span class="pill sm">${T.you}</span>`:""}<small>${T.from} ${fmt(LGT[i],0)} RPM</small></div></div><div class="tr"><b>×${(1+i*.25).toFixed(2)}</b><small>${nf(r)} RPM/${T.h}<br>${T.max} ${nf(r*8)}</small></div></div>`}).join("");
     const rg=RIGC.map((c,i)=>`<div class="tl"><div><b>${T.rig} ${i+1}</b></div><div class="tr"><b>×${(1+(i+1)*.2).toFixed(1)}</b><small>${fmt(c,0)} RPM</small></div></div>`).join("");
     const am=ranks.map((r,i)=>`<div class="tl${S?.amb?.rank===i?" cur":""}"><div><b>${r.name}</b><small>${r.need} ${T.af}</small></div><div class="tr"><b>${Math.round(r.share*100)}%</b></div></div>`).join("");
     return `<p class="tp">${T.li}</p><div class="tsh">${T.lt}</div>${lg}<div class="tsh">${T.rt}</div><p class="tp">${T.ri}</p>${rg}<div class="tn">${T.fm}</div><div class="tsh">${T.at}</div><p class="tp">${T.ai}</p>${am}`;
