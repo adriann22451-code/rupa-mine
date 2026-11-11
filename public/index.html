@@ -22,6 +22,35 @@ svg{display:block}
 .brand svg{width:34px;height:34px;filter:drop-shadow(0 4px 12px #f2b84b66)}
 .hr{display:flex;align-items:center;gap:10px}
 .mineico{width:42px;height:auto;image-rendering:pixelated;filter:drop-shadow(0 3px 10px #f08a3c66)}
+.hr{gap:8px}
+.mineico{width:38px}
+.bookbtn{width:36px;height:36px;flex:none;display:grid;place-items:center;padding:0;border-radius:12px;border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);background:color-mix(in srgb,var(--acc) 14%,#16101f);cursor:pointer}
+.bookbtn svg{width:19px;height:19px;stroke:var(--acc2);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bookbtn:active{transform:scale(.94)}
+.tut{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;justify-content:center;background:#05030acc;backdrop-filter:blur(6px)}
+.tut.show{display:flex;animation:in .2s ease}
+.tut .box{width:100%;max-width:520px;height:min(88vh,760px);display:flex;flex-direction:column;background:linear-gradient(180deg,#1d1529,#120d1b);border:1px solid #5a4520;border-bottom:0;border-radius:28px 28px 0 0;overflow:hidden}
+.tut .th{display:flex;align-items:center;gap:8px;padding:16px 16px 10px}
+.tut .th b{flex:1;font:800 19px var(--disp);letter-spacing:-.02em}
+.tbtn{height:34px;min-width:34px;padding:0 10px;border-radius:11px;border:1px solid var(--line);background:var(--s2);color:var(--text);font:700 12px Figtree,system-ui,sans-serif;cursor:pointer;display:grid;place-items:center}
+.tbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.tt{display:flex;gap:6px;padding:0 16px 10px}
+.tt button{flex:1;padding:9px 6px;border-radius:12px;border:1px solid var(--line);background:var(--s2);color:var(--mute);font:700 13px Figtree,system-ui,sans-serif;cursor:pointer}
+.tt button.on{color:#1a1204;background:linear-gradient(180deg,var(--gold2),var(--gold));border-color:transparent}
+.tbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px 16px calc(28px + env(safe-area-inset-bottom))}
+.ts{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.ts:first-child{border-top:0}
+.ts>i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:800 13px var(--disp);font-style:normal;color:#1a1204;background:linear-gradient(135deg,var(--gold2),var(--ember))}
+.ts b,.tf b,.tl b,.tsh{font-family:var(--disp)}
+.ts p,.tf p,.tp{color:var(--mute);font-size:13.5px;margin-top:2px}
+.tn{margin-top:8px;padding:12px 14px;border-radius:16px;border:1px solid #5a4520;background:#2c1f1255;font-size:13px;color:var(--gold2)}
+.tsh{font-size:15px;font-weight:800;margin:20px 0 4px}
+.tl{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 12px;margin-top:8px;border-radius:16px;border:1px solid var(--line);background:var(--s2)}
+.tl.cur{border-color:color-mix(in srgb,var(--acc) 70%,transparent);background:color-mix(in srgb,var(--acc) 12%,#1d1628)}
+.tl b{font-size:14px;white-space:nowrap}.tl .pill{margin-left:8px}
+.tl small{display:block;color:var(--mute);font-size:12px}
+.tl .tr{text-align:right;flex:none}
+.tf{padding:13px 0;border-top:1px solid var(--line)}.tf:first-child{border-top:0}
+.tf b{font-size:15px}
 .lv{border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);background:color-mix(in srgb,var(--acc) 14%,#16101f);border-radius:99px;padding:6px 14px;font-weight:700;font-size:13px;color:var(--acc2)}
 .card{background:linear-gradient(180deg,#1b1427,#140f1d);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:12px;box-shadow:0 12px 32px #0007,inset 0 1px 0 #ffffff0f}
 .card>b,.promo b,.mhead b,.lgi b{font-family:var(--disp);letter-spacing:-.01em}
@@ -158,7 +187,7 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
 
 <header class="top">
   <div class="brand"><svg><use href="#gemS"/></svg>Rupa Mine</div>
-  <div class="hr"><div class="lv" id="lvl">Lv –</div><img class="mineico" src="/mine.png" alt="Rupa Mine"></div>
+  <div class="hr"><button class="bookbtn" id="bookBtn" aria-label="Tutorial"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></button><div class="lv" id="lvl">Lv –</div><img class="mineico" src="/mine.png" alt="Rupa Mine"></div>
 </header>
 
 <section class="tab on" id="t-mining">
@@ -294,6 +323,12 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
     <button class="cta" id="w-go" disabled>Withdraw</button>
   </div>
 </section>
+
+<div class="tut" id="tut" role="dialog" aria-modal="true" aria-labelledby="tut-t"><div class="box">
+  <div class="th"><b id="tut-t">How to play</b><button class="tbtn" id="tut-lang">ID</button><button class="tbtn" id="tut-x" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="tt" id="tut-tabs"></div>
+  <div class="tbody" id="tut-body"></div>
+</div></div>
 
 <div class="demo" id="demo" hidden>Demo mode: server not connected, data is stored on this device.</div>
 <div class="sheet" id="sheet"><div class="grid">
@@ -466,4 +501,86 @@ $("#w-dis").onclick=async()=>{try{await tc?.disconnect()}catch{}act("wallet",{ad
 document.querySelectorAll("#w-quick button").forEach(b=>b.onclick=()=>{$("#w-amt").value=Math.floor((S?S.balance:0)*b.dataset.p)/100});
 $("#w-go").onclick=async()=>{if(await act("withdraw",{amount:parseFloat($("#w-amt").value)})){$("#w-amt").value="";msg("Withdrawal request sent. Processed within 1–24 hours.")}};
 api("me").then(s=>{set(s);const w=tc?.wallet;if(w){const a=friendly(w.account.address);if(s.wallet!==a)act("wallet",{address:a})}}).catch(e=>alert(e.message));
+
+// ---- Tutorial (book menu) ----
+// Numbers below mirror server.js (BASE_RATE, LEVELS, boost, RIG_COST, STAKE_PLANS, AMB). Plans/ranks/minimums are read from the server state when available.
+const TUT={
+en:{t:"How to play",tabs:["Guide","Leagues","Features"],
+g:[["Mining runs by itself","Your miner earns RPM every hour, even when the app is closed. Base speed is 10 RPM per hour."],
+["Claim before storage fills","Storage holds up to 8 hours of mining. When it is full, mining stops until you tap Claim. Open the app at least every 8 hours."],
+["Check in every day","Menu → Tasks → Check in. The reward is 10 RPM on day 1 and grows by 10 each day, up to 70 RPM from day 7. Missing a day resets the streak."],
+["Finish the tasks","One-time rewards: join the official channel (+30 RPM) and invite 3 active friends (+50 RPM). An active friend is someone who has claimed mining at least once."],
+["Boost your speed","Upgrade your Rig (+20% per level) and climb leagues (+25% per level). The two multiply together."],
+["Invite friends","You earn a share of everything your friends mine: 5% by default, up to 15% as an Ambassador. Their own earnings are not reduced."],
+["Grow or cash out","Stake RPM for up to +30% reward, or connect a TON wallet and withdraw."]],
+tip:"Tip: claim every time you open the app, and put RPM into your Rig. A speed upgrade applies to every hour of mining after it.",
+li:"Your league depends on the total RPM you have mined, not your balance, so spending or staking never lowers it. Only mining counts: check-in, tasks and referral bonuses do not.",
+you:"You",from:"from",h:"h",max:"max per claim",
+lt:"League boost",rt:"Rig upgrades",ri:"Each Rig level adds +20% speed on top of your league boost.",rig:"Rig",
+fm:"Final speed = 10 × league boost × Rig boost. Example: Legend + Rig 5 = 10 × 2.25 × 2.0 = 45 RPM per hour.",
+at:"Ambassador ranks",ai:"Ranks are based on active friends. A higher rank gives a bigger share of your friends' mining (default is 5%).",af:"active friends",
+f:[["Mining","Automatic. Speed = 10 RPM/hour × league boost × Rig boost. Storage caps at 8 hours, so claim regularly. Claimed RPM goes to your App Balance."],
+["Rig","Five upgrade levels, paid in RPM. Each level adds +20% speed. Mining in progress is settled at the old speed before the upgrade."],
+["Staking","Lock RPM (minimum {ms}) for {pl} to get the reward at the end. Up to 10 active stakes. Cancelling early returns your principal without the reward."],
+["Friends & Ambassador","Share your invite link. You earn a share of your friends' mining, and reaching Pioneer, Envoy and General raises that share."],
+["Tasks","Daily check-in with a streak bonus, plus one-time tasks: join the official channel (+30 RPM) and invite 3 active friends (+50 RPM)."],
+["Swap","Preview only. Rates shown are samples until the token launches."],
+["Wallet & Withdraw","Connect a TON wallet, then request a withdrawal (minimum {mw} RPM). Requests are processed manually within 1–24 hours. Your balance is deducted immediately and refunded if the request is rejected."]]},
+id:{t:"Cara bermain",tabs:["Panduan","League","Fitur"],
+g:[["Mining jalan sendiri","Miner kamu menghasilkan RPM tiap jam, bahkan saat aplikasi ditutup. Kecepatan dasarnya 10 RPM per jam."],
+["Claim sebelum penyimpanan penuh","Penyimpanan menampung mining sampai 8 jam. Kalau sudah penuh, mining berhenti sampai kamu tekan Claim. Buka aplikasi minimal tiap 8 jam."],
+["Check-in tiap hari","Menu → Tasks → Check in. Hadiahnya 10 RPM di hari ke-1 dan naik 10 tiap hari, sampai 70 RPM mulai hari ke-7. Kalau bolong sehari, streak mulai dari awal."],
+["Selesaikan tugas","Hadiah sekali saja: gabung channel resmi (+30 RPM) dan undang 3 teman aktif (+50 RPM). Teman aktif adalah teman yang sudah pernah claim mining minimal sekali."],
+["Tingkatkan kecepatan","Upgrade Rig (+20% per level) dan naikkan league (+25% per level). Keduanya saling dikalikan."],
+["Undang teman","Kamu dapat bagian dari semua hasil mining temanmu: 5% secara default, sampai 15% sebagai Ambassador. Penghasilan teman tidak berkurang."],
+["Kembangkan atau tarik","Stake RPM untuk hadiah sampai +30%, atau hubungkan wallet TON lalu withdraw."]],
+tip:"Tips: claim setiap kali membuka aplikasi, dan tanamkan RPM ke Rig. Upgrade kecepatan berlaku untuk setiap jam mining setelahnya.",
+li:"League ditentukan oleh total RPM yang pernah kamu mining, bukan saldo, jadi memakai atau men-stake RPM tidak menurunkannya. Hanya mining yang dihitung: check-in, tugas, dan bonus referral tidak masuk.",
+you:"Kamu",from:"mulai",h:"jam",max:"maks per claim",
+lt:"Boost league",rt:"Upgrade Rig",ri:"Setiap level Rig menambah +20% kecepatan di atas boost league.",rig:"Rig",
+fm:"Kecepatan akhir = 10 × boost league × boost Rig. Contoh: Legend + Rig 5 = 10 × 2,25 × 2,0 = 45 RPM per jam.",
+at:"Peringkat Ambassador",ai:"Peringkat ditentukan oleh jumlah teman aktif. Peringkat lebih tinggi memberi bagian lebih besar dari mining temanmu (default 5%).",af:"teman aktif",
+f:[["Mining","Otomatis. Kecepatan = 10 RPM/jam × boost league × boost Rig. Penyimpanan maksimal 8 jam, jadi claim secara rutin. RPM yang di-claim masuk ke App Balance."],
+["Rig","Lima level upgrade, dibayar dengan RPM. Tiap level menambah +20% kecepatan. Mining yang sedang berjalan dihitung dulu dengan kecepatan lama sebelum upgrade."],
+["Staking","Kunci RPM (minimal {ms}) selama {pl} untuk mendapat hadiah di akhir. Maksimal 10 stake aktif. Membatalkan sebelum waktunya mengembalikan pokok tanpa hadiah."],
+["Teman & Ambassador","Bagikan link undanganmu. Kamu dapat bagian dari mining temanmu, dan naik ke Pioneer, Envoy, lalu General menaikkan bagian itu."],
+["Tasks","Check-in harian dengan bonus streak, ditambah tugas sekali saja: gabung channel resmi (+30 RPM) dan undang 3 teman aktif (+50 RPM)."],
+["Swap","Baru preview. Kurs yang tampil hanya contoh sampai token diluncurkan."],
+["Wallet & Withdraw","Hubungkan wallet TON, lalu ajukan withdraw (minimal {mw} RPM). Permintaan diproses manual dalam 1–24 jam. Saldo langsung dipotong dan dikembalikan kalau permintaan ditolak."]]}
+};
+let tLang=((tg?.initDataUnsafe?.user?.language_code||navigator.language||"en")+"").toLowerCase().startsWith("id")?"id":"en",tTab=0;
+const LGN=["Bronze","Silver","Gold","Platinum","Diamond","Legend"],LGT=[0,100,300,800,2000,5000],RIGC=[200,600,1500,4000,10000];
+const nf=x=>fmt(x,x%1?1:0);
+function tutHTML(){
+  const T=TUT[tLang],cur=S?.level||0;
+  const plans=S?.plans||[{days:7,pct:5},{days:14,pct:12},{days:30,pct:30}];
+  const ranks=S?.amb?.ranks||[{name:"Pioneer",need:5,share:.07},{name:"Envoy",need:15,share:.10},{name:"General",need:50,share:.15}];
+  const dd=tLang==="id"?"hari":"days",and=tLang==="id"?"atau":"or";
+  const pl=plans.map(x=>`${x.days} ${dd} (+${x.pct}%)`).join(", ").replace(/, ([^,]*)$/," "+and+" $1");
+  if(tTab===0) return T.g.map((x,i)=>`<div class="ts"><i>${i+1}</i><div><b>${x[0]}</b><p>${x[1]}</p></div></div>`).join("")+`<div class="tn">${T.tip}</div>`;
+  if(tTab===1){
+    const lg=LGN.map((nm,i)=>{const r=10*(1+i*.25);return `<div class="tl${cur===i+1?" cur":""}"><div><b>Lv ${i+1} · ${nm}</b>${cur===i+1?`<span class="pill sm">${T.you}</span>`:""}<small>${T.from} ${fmt(LGT[i],0)} RPM</small></div><div class="tr"><b>×${(1+i*.25).toFixed(2)}</b><small>${nf(r)} RPM/${T.h}<br>${T.max} ${nf(r*8)}</small></div></div>`}).join("");
+    const rg=RIGC.map((c,i)=>`<div class="tl"><div><b>${T.rig} ${i+1}</b></div><div class="tr"><b>×${(1+(i+1)*.2).toFixed(1)}</b><small>${fmt(c,0)} RPM</small></div></div>`).join("");
+    const am=ranks.map((r,i)=>`<div class="tl${S?.amb?.rank===i?" cur":""}"><div><b>${r.name}</b><small>${r.need} ${T.af}</small></div><div class="tr"><b>${Math.round(r.share*100)}%</b></div></div>`).join("");
+    return `<p class="tp">${T.li}</p><div class="tsh">${T.lt}</div>${lg}<div class="tsh">${T.rt}</div><p class="tp">${T.ri}</p>${rg}<div class="tn">${T.fm}</div><div class="tsh">${T.at}</div><p class="tp">${T.ai}</p>${am}`;
+  }
+  return T.f.map(x=>`<div class="tf"><b>${x[0]}</b><p>${x[1].replace("{ms}",(S?.minStake||100)+" RPM").replace("{pl}",pl).replace("{mw}",S?.minWithdraw||100)}</p></div>`).join("");
+}
+function tutRender(){
+  const T=TUT[tLang];
+  $("#tut-t").textContent=T.t;$("#tut-lang").textContent=tLang==="id"?"EN":"ID";
+  $("#tut-tabs").innerHTML=T.tabs.map((x,i)=>`<button class="${i===tTab?"on":""}" data-i="${i}">${x}</button>`).join("");
+  $("#tut-body").innerHTML=tutHTML();$("#tut-body").scrollTop=0;
+}
+function tutOpen(o){
+  if(o){sheet(false);tTab=0;tutRender();tg?.HapticFeedback?.impactOccurred?.("light")}
+  $("#tut").classList.toggle("show",o);
+  document.body.style.overflow=o?"hidden":"";
+}
+$("#bookBtn").onclick=()=>tutOpen(true);
+$("#tut-x").onclick=()=>tutOpen(false);
+$("#tut").onclick=e=>{if(e.target.id==="tut")tutOpen(false)};
+$("#tut-lang").onclick=()=>{tLang=tLang==="id"?"en":"id";tutRender()};
+$("#tut-tabs").onclick=e=>{const b=e.target.closest("button");if(b){tTab=+b.dataset.i;tutRender()}};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")tutOpen(false)});
 </script></body></html>
