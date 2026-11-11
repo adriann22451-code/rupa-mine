@@ -1,123 +1,145 @@
 <!doctype html>
-<html lang="id"><head>
+<html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Rupa Mine</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 <style>
-:root{--bg:#07090d;--s1:#0f131a;--s2:#151a23;--line:#222a37;--gold:#e9b24a;--gold2:#ffdc92;--ember:#ff8a3d;--text:#f4efe6;--mute:#8a93a3;--ok:#52e0ae}
+:root{--bg:#0d0a14;--s1:#16101f;--s2:#1d1628;--line:#2e2440;--gold:#f2b84b;--gold2:#ffe09a;--ember:#f08a3c;--text:#f6f0e8;--mute:#9a90ab;--ok:#5be0b0;--disp:"Bricolage Grotesque",system-ui,sans-serif}
+body{--acc:#d38b4f;--acc2:#f3b98a}
+body[data-lv="2"]{--acc:#aab6c8;--acc2:#e6ecf5}
+body[data-lv="3"]{--acc:#f2b84b;--acc2:#ffe09a}
+body[data-lv="4"]{--acc:#a8b4ff;--acc2:#e3e7ff}
+body[data-lv="5"]{--acc:#57e3e8;--acc2:#d2fcff}
+body[data-lv="6"]{--acc:#ff7ad9;--acc2:#ffd3f3}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-body{background:radial-gradient(#ffffff0b 1px,transparent 1.2px) 0 0/22px 22px,radial-gradient(120% 55% at 50% -8%,#2a2212 0,var(--bg) 62%) no-repeat,var(--bg);color:var(--text);font:15px/1.4 Sora,system-ui,sans-serif;min-height:100vh;padding:max(14px,env(safe-area-inset-top)) 16px calc(100px + env(safe-area-inset-bottom))}
+body{background:radial-gradient(110% 38% at 50% -6%,#4a2f1566,transparent 72%),repeating-linear-gradient(172deg,#ffffff07 0 1px,transparent 1px 54px),linear-gradient(#150f20,#0d0a14 45%,#09070f);color:var(--text);font:15px/1.45 Figtree,system-ui,sans-serif;min-height:100vh;padding:max(14px,env(safe-area-inset-top)) 16px calc(112px + env(safe-area-inset-bottom))}
 svg{display:block}
-.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.02em}
-.brand svg{width:30px;height:30px}
-.lv{background:linear-gradient(var(--s1),var(--s1)) padding-box,linear-gradient(135deg,var(--gold2),var(--ember)) border-box;border:1px solid transparent;border-radius:99px;padding:6px 13px;font-weight:600;font-size:13px;color:var(--gold2)}
-.card{background:linear-gradient(180deg,#151a24,#0f131a);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 10px 30px #0006,inset 0 1px 0 #ffffff0d}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:10px;font:800 21px var(--disp);letter-spacing:-.03em}
+.brand svg{width:34px;height:34px;filter:drop-shadow(0 4px 12px #f2b84b66)}
+.lv{border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);background:color-mix(in srgb,var(--acc) 14%,#16101f);border-radius:99px;padding:6px 14px;font-weight:700;font-size:13px;color:var(--acc2)}
+.card{background:linear-gradient(180deg,#1b1427,#140f1d);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:12px;box-shadow:0 12px 32px #0007,inset 0 1px 0 #ffffff0f}
+.card>b,.promo b,.mhead b,.lgi b{font-family:var(--disp);letter-spacing:-.01em}
 .lbl{color:var(--mute);font-size:13px}
 .between{display:flex;justify-content:space-between;align-items:baseline}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.unit{color:var(--gold);font-size:13px;font-weight:600;margin-left:5px}
-/* inti mining */
-.hero{position:relative;width:min(210px,58vw);aspect-ratio:1;margin:12px auto 4px}
-.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.ring circle{fill:none;stroke-width:10;stroke-linecap:round}
-.trk{stroke:#171d28}
-.prg{stroke:url(#rg);stroke-dasharray:703.7;stroke-dashoffset:703.7;transition:stroke-dashoffset .3s linear;filter:drop-shadow(0 0 6px #e9b24a88)}
-.glow{position:absolute;inset:16%;border-radius:50%;background:radial-gradient(#e9b24a45,transparent 70%);animation:pulse 3s ease-in-out infinite}
-.gem{position:absolute;left:27%;top:24%;width:46%;height:46%;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 8px 22px #e9a63a77)}
-.pct{position:absolute;left:0;right:0;bottom:17%;text-align:center;font-size:12px;color:var(--mute)}
-.pt{position:absolute;left:var(--x);bottom:30%;width:4px;height:4px;border-radius:50%;background:var(--gold2);opacity:0;animation:rise 4s linear infinite var(--d)}
+.unit{color:var(--gold);font-size:13px;font-weight:700;margin-left:5px}
+.bank{position:relative;overflow:hidden;border-radius:26px;border-color:#5b4322;background:linear-gradient(135deg,#2c1f12,#1a1226 62%)}
+.bank::after{content:"";position:absolute;right:-34px;top:-34px;width:130px;height:130px;border-radius:50%;border:1px solid #f2b84b2e;box-shadow:0 0 0 18px #f2b84b0c,0 0 0 40px #f2b84b07;pointer-events:none}
 .pwrap{text-align:center;margin-bottom:14px}
-.pwrap .num{font-size:40px;color:#5be28f;text-shadow:0 0 28px #52e0ae44}
-@keyframes float{50%{transform:translateY(-6px)}}
+.pwrap .num{font-size:40px;color:var(--ok);text-shadow:0 0 28px #5be0b044}
 @keyframes pulse{50%{transform:scale(1.12);opacity:.7}}
-@keyframes rise{0%{transform:translateY(0);opacity:0}20%{opacity:.9}100%{transform:translateY(-110px);opacity:0}}
 .burst{position:absolute;left:0;right:0;top:36%;text-align:center;font-weight:800;font-size:20px;color:var(--ok);pointer-events:none;animation:up 1.1s ease-out forwards}
 @keyframes up{to{transform:translateY(-70px);opacity:0}}
-.cta{position:relative;overflow:hidden;width:100%;border:0;border-radius:16px;padding:16px;font:inherit;font-weight:800;font-size:16px;color:#1a1204;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#d18e2c);box-shadow:0 8px 24px #e9b24a33,inset 0 1px 0 #fff8;cursor:pointer}
+.cta{position:relative;overflow:hidden;width:100%;border:0;border-radius:18px;padding:16px;font:800 16px var(--disp);color:#1a1204;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#d18e2c);box-shadow:0 8px 24px #f2b84b33,inset 0 1px 0 #fff8;cursor:pointer}
 .cta:active{transform:scale(.98)}
 .cta:disabled{opacity:.35;box-shadow:none;cursor:default}
-.cta::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,#fff6 50%,transparent 65%);transform:translateX(-100%);animation:shine 3.5s infinite}
+.cta::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,#fff6 50%,transparent 65%);transform:translateX(-100%);animation:shine 4.5s infinite}
 .cta:disabled::after{display:none}
 @keyframes shine{40%,100%{transform:translateX(100%)}}
-.ghost{border:1px solid var(--line);background:var(--s2);color:var(--text);border-radius:16px;padding:14px;font:inherit;font-weight:600;cursor:pointer}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 12px}
-.chip{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}
+.ghost{border:1px solid var(--line);background:var(--s2);color:var(--text);border-radius:18px;padding:14px;font:inherit;font-weight:700;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:14px 0 12px;border:1px solid var(--line);border-radius:20px;background:#140f1d;overflow:hidden}
+.chip{padding:14px 6px;text-align:center}
+.chip+.chip{border-left:1px solid var(--line)}
 .chip svg{width:16px;height:16px;margin:0 auto;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.chip b{display:block;font-size:16px;margin-top:4px}
+.chip b{display:block;font-size:17px;margin:6px 0 2px}
 .chip span{font-size:12px;color:var(--mute)}
-.bar{height:8px;border-radius:9px;background:#171d28;overflow:hidden;margin:10px 0 8px}
-.bar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--ember),var(--gold2));transition:width .5s}
+.bar{height:8px;border-radius:9px;background:#ffffff12;overflow:hidden;margin:10px 0 8px}
+.bar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .5s}
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0}
-.day{aspect-ratio:1;border-radius:12px;border:1px solid var(--line);background:var(--s2);display:grid;place-items:center;font-weight:600;font-size:13px;color:var(--mute)}
-.day.done{background:linear-gradient(160deg,var(--gold2),var(--gold));color:#1a1204;border-color:transparent}
-.day.next{border-color:var(--gold);color:var(--gold2)}
+.day{aspect-ratio:1;border-radius:50%;border:1px solid var(--line);background:var(--s2);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--mute)}
+.day.done{background:linear-gradient(160deg,var(--gold2),var(--gold));color:#1a1204;border-color:transparent;box-shadow:0 0 12px #f2b84b44}
+.day.next{border:1.5px dashed var(--gold);color:var(--gold2)}
 .task{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);color:var(--mute)}
-.tag{font-size:12px;border:1px solid var(--line);border-radius:99px;padding:3px 10px}
-.linkbox{background:var(--s2);border:1px dashed #3a4354;border-radius:12px;padding:12px;font-size:13px;word-break:break-all;margin:12px 0}
+.tag{font-size:12px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--mute)}
+.linkbox{background:var(--s2);border:1px dashed #4a3d62;border-radius:14px;padding:12px;font-size:13px;word-break:break-all;margin:12px 0}
 .row{display:flex;gap:8px}.row>*{flex:1}
-nav{position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;gap:4px;background:#0d1117ee;backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:22px;padding:6px}
-nav button{flex:1;display:grid;justify-items:center;gap:3px;border:0;background:none;color:var(--mute);padding:9px 0;border-radius:16px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+nav{position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;gap:4px;background:#110c19ee;backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:28px;padding:6px;box-shadow:0 14px 40px #000a}
+nav button{flex:1;display:grid;justify-items:center;gap:3px;border:0;background:none;color:var(--mute);padding:9px 0;border-radius:22px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
 nav svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-nav button.on{color:var(--gold2);background:linear-gradient(180deg,#1b2130,#151a23);box-shadow:inset 0 1px 0 #ffffff10,0 0 18px #e9b24a1f}
+nav button.on{color:var(--acc2);background:color-mix(in srgb,var(--acc) 15%,#1d1628);box-shadow:inset 0 1px 0 #ffffff12,0 0 18px color-mix(in srgb,var(--acc) 22%,transparent)}
 .tab{display:none}.tab.on{display:block;animation:in .25s ease}
 @keyframes in{from{opacity:0;transform:translateY(6px)}}
-.dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--ember));box-shadow:0 0 10px #e9b24a88}
-.orbit{position:absolute;inset:8%;border-radius:50%;border:1px dashed #e9b24a40;animation:spin 40s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.box{background:var(--s2);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px}
+.dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--ember));box-shadow:0 0 10px #f2b84b88}
+.box{background:var(--s2);border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:10px}
 .box .between{align-items:center}
-.box input{background:none;border:0;outline:0;color:var(--text);font:800 26px Sora,sans-serif;width:60%;min-width:0;font-variant-numeric:tabular-nums}
-.coin{display:inline-flex;align-items:center;gap:6px;background:#0d1117;border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-weight:600;font-size:13px}
+.box input{background:none;border:0;outline:0;color:var(--text);font:800 26px var(--disp);width:60%;min-width:0;font-variant-numeric:tabular-nums}
+.coin{display:inline-flex;align-items:center;gap:6px;background:#110c19;border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-weight:700;font-size:13px}
 .coin::before{content:"";width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--ember))}
 .coin.ton::before{background:linear-gradient(135deg,#6cc4ff,#2a7fe8)}
 .quick{display:flex;gap:6px;margin-top:10px}
-.quick button{flex:1;background:#0d1117;border:1px solid var(--line);border-radius:10px;color:var(--mute);padding:6px 0;font:inherit;font-size:12px;cursor:pointer}
-.flip{display:grid;place-items:center;width:38px;height:38px;margin:-6px auto -6px;position:relative;z-index:1;border-radius:50%;border:1px solid var(--line);background:var(--s1);color:var(--gold2);cursor:pointer}
+.quick button{flex:1;background:#110c19;border:1px solid var(--line);border-radius:12px;color:var(--mute);padding:7px 0;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.flip{display:grid;place-items:center;width:40px;height:40px;margin:-6px auto -6px;position:relative;z-index:1;border-radius:50%;border:1px solid var(--line);background:var(--s1);color:var(--gold2);cursor:pointer}
 .flip svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .info{padding:12px 2px 14px;font-size:13px;color:var(--mute)}
 .spark{position:relative;margin:12px 0 2px}.spark svg{width:100%;height:80px}.spark small{position:absolute;right:0;top:0;color:var(--mute);font-size:11px}
 .mono,.chip b{font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:-.04em}
-.mine{border-color:#6a4f1e;background:linear-gradient(165deg,#1d1a12,#0f131a 55%)}
+.mine{border-radius:32px;padding:20px 18px;border-color:color-mix(in srgb,var(--acc) 45%,#2e2440);background:radial-gradient(70% 42% at 50% 40%,color-mix(in srgb,var(--acc) 16%,transparent),transparent 70%),repeating-linear-gradient(176deg,#ffffff05 0 1px,transparent 1px 28px),linear-gradient(#1c1527,#130e1c)}
 .mhead{display:flex;align-items:center;gap:12px}.mhead>div{flex:1}
-.ibox{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#1a1d24;border:1px solid var(--line);flex:none}.ibox svg{width:28px;height:28px}
+.ibox{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:#1d1628;border:1px solid var(--line);flex:none}.ibox svg{width:28px;height:28px}
 .run{display:flex;align-items:center;gap:6px;color:var(--ok);font-size:13px;font-weight:600}
 .run i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 2s infinite}
-.pill{border:1px solid #6a4f1e;background:#2a2112;color:var(--gold2);border-radius:14px;padding:8px 12px;font-weight:600;font-size:13px}
+.pill{border:1px solid color-mix(in srgb,var(--acc) 50%,transparent);background:color-mix(in srgb,var(--acc) 14%,#16101f);color:var(--acc2);border-radius:14px;padding:8px 12px;font-weight:700;font-size:13px}
 .pill.sm{padding:3px 10px;font-size:12px;border-radius:99px}
-.promo{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:20px;border:1px solid #1f5560;background:linear-gradient(120deg,#0e2a33,#1a1233);margin-bottom:12px}
+.promo{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;border:1px solid #1f5560;background:linear-gradient(120deg,#0e2a33,#1d1238);margin-bottom:12px}
 .promo>i{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;border:1px solid #2b6a77;background:#0f2f38;flex:none}
 .promo svg{width:22px;height:22px;stroke:#7fe8f0;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .promo div{flex:1;min-width:0}.promo b{display:block;font-size:14px}.promo span{font-size:12px;color:#8fb7be}
 .promo em{font-style:normal;font-weight:800;font-size:13px;color:#06222a;background:linear-gradient(90deg,#5fd4f0,#8af0cf);padding:9px 14px;border-radius:12px;opacity:.55}
 .ch{display:flex;align-items:center;justify-content:center;gap:5px;font-size:13px;color:var(--mute)}.ch svg{margin:0}
-.chip b{font-size:17px;margin:6px 0 2px}
 .lg{display:flex;align-items:center;gap:14px}
-.lgb{display:grid;align-content:center;justify-items:center;width:62px;height:62px;border-radius:16px;border:1px solid #6a4f1e;background:#2a2112;flex:none;color:var(--gold2)}
-.lgb small{font-size:11px;font-weight:800}.lgb b{font-size:22px;line-height:1}
+.lgb{display:grid;align-content:center;justify-items:center;width:60px;height:68px;clip-path:polygon(50% 0,100% 16%,100% 68%,50% 100%,0 68%,0 16%);background:linear-gradient(160deg,var(--acc2),var(--acc));flex:none;color:#1a1204;padding-bottom:6px}
+.lgb small{font-size:11px;font-weight:700}.lgb b{font:800 24px/1 var(--disp)}
 .lgi{flex:1;min-width:0;display:grid;gap:3px}.up{color:var(--ok);font-size:13px}
-.sheet{position:fixed;left:14px;right:14px;bottom:calc(98px + env(safe-area-inset-bottom));background:#0d1117f2;backdrop-filter:blur(16px);border:1px solid #5a4520;border-radius:24px;padding:14px;display:none;z-index:5;box-shadow:0 20px 50px #000a}
+.sheet{position:fixed;left:14px;right:14px;bottom:calc(98px + env(safe-area-inset-bottom));background:#110c19f2;backdrop-filter:blur(18px);border:1px solid #5a4520;border-radius:28px;padding:14px;display:none;z-index:5;box-shadow:0 20px 50px #000a}
 .sheet.show{display:block;animation:in .2s ease}
 .sheet .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sv{background:var(--s2);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;color:var(--text);font:inherit;display:grid;gap:4px;cursor:pointer}
+.sv{background:var(--s2);border:1px solid var(--line);border-radius:18px;padding:14px;text-align:left;color:var(--text);font:inherit;display:grid;gap:4px;cursor:pointer}
 .sv span{font-size:12px;color:var(--mute)}.sv.off{opacity:.5;cursor:default}
 nav .mid{align-content:end;background:none!important;box-shadow:none!important}
-nav .mid i{display:grid;place-items:center;width:56px;height:56px;margin-top:-30px;border-radius:50%;background:linear-gradient(180deg,#1b2130,#10141c);border:1px solid var(--line);box-shadow:0 8px 20px #0008}
+nav .mid i{display:grid;place-items:center;width:56px;height:56px;margin-top:-30px;border-radius:50%;background:linear-gradient(180deg,#241a33,#130e1c);border:1px solid var(--line);box-shadow:0 8px 20px #000a}
 nav .mid.open{color:var(--gold2)}
 nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1204;border-color:transparent}
 .demo{color:var(--mute);font-size:12px;text-align:center;margin-top:10px}
 :focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.rigs{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:8px;margin:20px 0 16px;height:96px}
+.st{border-radius:12px;border:1px solid var(--line);background:#ffffff08}
+.st.on{background:linear-gradient(180deg,var(--acc2),var(--acc));border-color:transparent;box-shadow:0 0 14px color-mix(in srgb,var(--acc) 40%,transparent)}
+.st.next{border:1.5px dashed var(--acc)}
+.mini{border:0;border-radius:12px;padding:9px 14px;font:800 13px var(--disp);color:#1a1204;background:linear-gradient(180deg,var(--gold2),var(--gold));cursor:pointer}
+.mini:disabled{opacity:.35;cursor:default}
+.task small{font-size:12px}
+.promo[data-go]{cursor:pointer}.promo em{opacity:1}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.plan{display:grid;gap:2px;justify-items:center;padding:12px 4px;border-radius:16px;border:1px solid var(--line);background:var(--s2);color:var(--text);font:inherit;cursor:pointer}
+.plan b{font:800 15px var(--disp)}.plan span{font-size:13px;color:var(--ok);font-weight:700}
+.plan.on{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,#1d1628)}
+.task>span:first-child{color:var(--text)}.task small{color:var(--mute)}
+.hero{position:relative;margin:16px 0 4px;cursor:pointer}
+.bed{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cell{--f:0;position:relative;display:grid;place-items:center;aspect-ratio:1;border-radius:18px;border:1px solid var(--line);overflow:hidden;background:linear-gradient(160deg,#241a33,#140e1d);box-shadow:inset 0 6px 14px #0009}
+.cell::before{content:attr(data-h);position:absolute;left:9px;top:6px;font:600 10px "JetBrains Mono",monospace;color:#9a90ab99}
+.cell::after{content:"";position:absolute;left:12%;right:12%;bottom:7px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--acc),var(--acc2));transform-origin:left;transform:scaleX(var(--f));opacity:.9}
+.cell svg{width:66%;height:66%;transform:scale(calc(.3 + .7*var(--f)));opacity:calc(.2 + .8*var(--f));filter:grayscale(calc(1 - var(--f))) drop-shadow(0 6px 10px #f2b84b55)}
+.cell.on{border-color:color-mix(in srgb,var(--acc) 65%,transparent)}
+.cell.full{border-color:color-mix(in srgb,var(--acc) 55%,transparent);background:radial-gradient(circle at 50% 115%,color-mix(in srgb,var(--acc) 26%,transparent),transparent 70%),linear-gradient(160deg,#2a2036,#160f20)}
+.bed.full{animation:bedglow 2.4s ease-in-out infinite}
+@keyframes bedglow{50%{filter:drop-shadow(0 0 14px color-mix(in srgb,var(--acc) 35%,transparent))}}
+.bed.tap .cell,.bed.harvest .cell{animation:hop .45s ease calc(var(--i)*40ms)}
+@keyframes hop{40%{transform:translateY(-6px)}}
+.hrs{display:flex;justify-content:space-between;align-items:baseline;margin:12px 2px 0}.hrs b{font-size:13px;color:var(--gold)}
+.pwrap{margin-top:14px}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9b0"/><stop offset="1" stop-color="#f0b94a"/></linearGradient>
 <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9a93a"/><stop offset="1" stop-color="#a8641a"/></linearGradient>
 <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c98322"/><stop offset="1" stop-color="#6e3b0c"/></linearGradient>
-<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ffdc92"/></linearGradient>
-<symbol id="gemS" viewBox="0 0 120 120"><polygon points="45,26 75,26 92,46 28,46" fill="url(#g1)"/><polygon points="28,46 60,46 60,100" fill="url(#g2)"/><polygon points="92,46 60,46 60,100" fill="url(#g3)"/><polygon points="45,26 60,46 28,46" fill="#fff" opacity=".2"/><polygon points="75,26 60,46 92,46" fill="#000" opacity=".12"/></symbol>
+<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--acc)"/><stop offset="1" style="stop-color:var(--acc2)"/></linearGradient>
+<symbol id="gemS" viewBox="0 0 120 120"><polygon points="42,24 78,24 70,38 50,38" fill="url(#g1)"/><polygon points="42,24 50,38 20,48" fill="#ffe9b0" opacity=".85"/><polygon points="78,24 70,38 100,48" fill="#e9a93a"/><polygon points="50,38 60,48 20,48" fill="url(#g2)"/><polygon points="70,38 100,48 60,48" fill="url(#g3)"/><polygon points="50,38 70,38 60,48" fill="#fff" opacity=".28"/><polygon points="20,48 60,48 60,104" fill="url(#g2)"/><polygon points="100,48 60,48 60,104" fill="url(#g3)"/><polygon points="20,48 42,48 60,104" fill="#fff" opacity=".16"/><polygon points="78,48 100,48 60,104" fill="#000" opacity=".16"/></symbol>
 </defs></svg>
 
 <header class="top">
@@ -126,138 +148,164 @@ nav .mid.open i{background:linear-gradient(180deg,var(--gold2),var(--gold));colo
 </header>
 
 <section class="tab on" id="t-mining">
-  <div class="promo"><i><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></i><div><b>Rig Mining</b><span>Tingkatkan kecepatan mining</span></div><em>Segera</em></div>
-  <div class="card">
-    <div class="between"><span class="lbl" style="display:flex;align-items:center;gap:8px;font-size:15px"><i class="dot"></i>Saldo Aplikasi</span><span class="tag">Dalam game</span></div>
+  <div class="promo" data-go="rig" role="button" tabindex="0"><i><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></i><div><b>Rig Mining</b><span>Boost your mining speed</span></div><em>Open</em></div>
+  <div class="card bank">
+    <div class="between"><span class="lbl" style="display:flex;align-items:center;gap:8px;font-size:15px"><i class="dot"></i>App Balance</span><span class="tag">In-game</span></div>
     <div style="margin-top:10px"><span class="num mono" id="bal" style="font-size:34px">0.0000</span><span class="unit">RPM</span></div>
   </div>
   <div class="card mine">
-    <div class="mhead"><i class="ibox"><svg><use href="#gemS"/></svg></i><div><b style="font-size:17px">Penambangan Aktif</b><div class="run"><i></i>Berjalan</div></div><span class="pill" id="lgp">Perunggu</span></div>
-    <div class="hero">
-      <svg class="ring" viewBox="0 0 260 260"><circle class="trk" cx="130" cy="130" r="112"/><circle class="prg" id="prg" cx="130" cy="130" r="112"/></svg>
-      <div class="glow"></div><div class="orbit"></div>
-      <i class="pt" style="--x:38%;--d:0s"></i><i class="pt" style="--x:52%;--d:1.2s"></i><i class="pt" style="--x:62%;--d:2.4s"></i><i class="pt" style="--x:45%;--d:3.1s"></i>
-      <svg class="gem"><use href="#gemS"/></svg>
-      <div class="pct" id="pct">0%</div>
-    </div>
-    <div class="pwrap"><div class="lbl">Belum diklaim</div><div><span class="num mono" id="pend">+0.0000</span><span class="unit">RPM</span></div></div>
-    <button class="cta" id="claim" disabled>Klaim</button>
+    <div class="mhead"><i class="ibox"><svg><use href="#gemS"/></svg></i><div><b style="font-size:17px">Active Mining</b><div class="run"><i></i>Running</div></div><span class="pill" id="lgp">Bronze</span></div>
+    <div class="hero" id="hero"><div class="bed" id="bed"><div class="cell" data-h="1h" style="--i:0"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="2h" style="--i:1"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="3h" style="--i:2"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="4h" style="--i:3"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="5h" style="--i:4"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="6h" style="--i:5"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="7h" style="--i:6"><svg><use href="#gemS"/></svg></div><div class="cell" data-h="8h" style="--i:7"><svg><use href="#gemS"/></svg></div></div></div>
+    <div class="hrs"><span class="lbl">Storage filled</span><b class="mono" id="pct">0%</b></div>
+    <div class="pwrap"><div class="lbl">Unclaimed</div><div><span class="num mono" id="pend">+0.0000</span><span class="unit">RPM</span></div></div>
+    <button class="cta" id="claim" disabled>Claim</button>
     <div class="lbl" id="cap" style="text-align:center;margin:8px 0 14px"></div>
     <div class="bar"><i id="fill"></i></div>
     <div class="between"><span class="lbl" id="lvltxt"></span><b id="lvpct" style="color:var(--gold)">0%</b></div>
   </div>
   <div class="stats">
-    <div class="chip"><span class="ch"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>Per jam</span><b id="sh">–</b><span>RPM</span></div>
-    <div class="chip"><span class="ch"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Per hari</span><b id="sd">–</b><span>RPM</span></div>
-    <div class="chip"><span class="ch"><svg viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Boost</span><b id="sb">–</b><span>pengali</span></div>
+    <div class="chip"><span class="ch"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>Per hour</span><b id="sh">–</b><span>RPM</span></div>
+    <div class="chip"><span class="ch"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Per day</span><b id="sd">–</b><span>RPM</span></div>
+    <div class="chip"><span class="ch"><svg viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Boost</span><b id="sb">–</b><span>multiplier</span></div>
   </div>
   <div class="card lg">
-    <div class="lgb"><small>LVL</small><b id="lgb">1</b></div>
-    <div class="lgi"><div style="display:flex;align-items:center;gap:8px"><b style="font-size:17px" id="lgn">Liga Perunggu</b><span class="pill sm" id="lgl">Lv 1</span></div>
-      <div class="lbl">Total mining: <b class="mono" id="lgt" style="color:var(--ok)">0</b> RPM</div>
-      <div class="up"><svg viewBox="0 0 24 24" width="14" height="14" style="display:inline;vertical-align:-2px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg> Menentukan level dan kecepatan</div></div>
+    <div class="lgb"><small>Level</small><b id="lgb">1</b></div>
+    <div class="lgi"><div style="display:flex;align-items:center;gap:8px"><b style="font-size:17px" id="lgn">League Bronze</b><span class="pill sm" id="lgl">Lv 1</span></div>
+      <div class="lbl">Total mined: <b class="mono" id="lgt" style="color:var(--ok)">0</b> RPM</div>
+      <div class="up"><svg viewBox="0 0 24 24" width="14" height="14" style="display:inline;vertical-align:-2px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg> Determines your level and speed</div></div>
   </div>
+</section>
+
+<section class="tab" id="t-rig">
+  <div class="card mine">
+    <div class="mhead"><i class="ibox"><svg><use href="#gemS"/></svg></i><div><b style="font-size:17px">Rig Mining</b><div class="lbl" id="rg-lv"></div></div><span class="pill" id="rg-b">×1.00</span></div>
+    <div class="rigs" id="rigs"></div>
+    <div class="between" style="margin-bottom:14px"><span class="lbl">Speed</span><b class="mono" id="rg-nx" style="font-size:14px">–</b></div>
+    <button class="cta" id="rg-up" disabled>Upgrade</button>
+    <div class="info" style="padding-bottom:0">Each level adds 20% speed, stacked with your league boost. Mining in progress is settled at the old speed first.</div>
+  </div>
+</section>
+
+<section class="tab" id="t-stake">
+  <div class="card bank"><div class="between"><span class="lbl">Currently locked</span><span class="tag">Staking</span></div>
+    <div style="margin-top:8px"><span class="num mono" id="st-tot" style="font-size:32px">0</span><span class="unit">RPM</span></div></div>
+  <div class="card"><b>Lock RPM</b>
+    <div class="plans" id="st-plans"></div>
+    <div class="box"><div class="between"><span class="lbl">Amount</span><span class="lbl" id="st-bal"></span></div>
+      <div class="between"><input id="st-amt" type="number" inputmode="decimal" min="0" placeholder="0"><span class="coin">RPM</span></div>
+      <div class="quick" id="st-quick"><button data-p="25">25%</button><button data-p="50">50%</button><button data-p="75">75%</button><button data-p="100">Max</button></div></div>
+    <div class="info between"><span>Reward at maturity</span><b class="mono" id="st-rw">–</b></div>
+    <button class="cta" id="st-go" disabled>Lock RPM</button>
+    <div class="info" style="padding-bottom:0">Minimum 100 RPM. Cancelling before maturity returns your principal without the reward.</div></div>
+  <div class="card" style="padding-bottom:6px"><b>Active stakes</b><div id="st-list"></div></div>
+</section>
+
+<section class="tab" id="t-amb">
+  <div class="card mine"><div class="lg"><div class="lgb"><small>Rank</small><b id="am-n">0</b></div>
+    <div class="lgi"><b style="font-size:17px" id="am-name">No rank yet</b><div class="lbl" id="am-sub"></div><div class="up" id="am-share"></div></div></div>
+    <div class="bar" style="margin-top:16px"><i id="am-fill"></i></div><div class="between"><span class="lbl" id="am-txt"></span><b id="am-pct" style="color:var(--gold)"></b></div></div>
+  <div class="card" style="padding-bottom:4px"><b>Ambassador ranks</b><div id="am-list" style="margin-top:10px"></div></div>
+  <button class="cta" data-go="friends">Invite friends</button>
 </section>
 
 <section class="tab" id="t-swap">
   <div class="card">
-    <div class="between"><b>Tukar token</b><span class="tag">Pratinjau</span></div>
-    <div class="spark"><small>Data contoh</small>
+    <div class="between"><b>Swap tokens</b><span class="tag">Preview</span></div>
+    <div class="spark"><small>Sample data</small>
       <svg viewBox="0 0 300 80" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9b24a" stop-opacity=".35"/><stop offset="1" stop-color="#e9b24a" stop-opacity="0"/></linearGradient></defs>
       <path d="M0 60C30 50 50 65 80 45S130 55 160 35 220 45 250 22 285 25 300 12V80H0Z" fill="url(#sg)"/>
       <path d="M0 60C30 50 50 65 80 45S130 55 160 35 220 45 250 22 285 25 300 12" fill="none" stroke="#ffdc92" stroke-width="2" stroke-linecap="round"/></svg></div>
     <div class="box">
-      <div class="between"><span class="lbl">Kamu bayar</span><span class="lbl" id="sw-bal"></span></div>
+      <div class="between"><span class="lbl">You pay</span><span class="lbl" id="sw-bal"></span></div>
       <div class="between"><input id="sw-in" type="number" inputmode="decimal" min="0" value="100" placeholder="0"><span class="coin" id="sw-from">RPM</span></div>
-      <div class="quick" id="sw-quick"><button data-p="25">25%</button><button data-p="50">50%</button><button data-p="75">75%</button><button data-p="100">Maks</button></div>
+      <div class="quick" id="sw-quick"><button data-p="25">25%</button><button data-p="50">50%</button><button data-p="75">75%</button><button data-p="100">Max</button></div>
     </div>
-    <button class="flip" id="sw-flip" aria-label="Balik arah tukar"><svg viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></button>
+    <button class="flip" id="sw-flip" aria-label="Flip swap direction"><svg viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></button>
     <div class="box">
-      <span class="lbl">Kamu terima (perkiraan)</span>
+      <span class="lbl">You receive (estimate)</span>
       <div class="between" style="margin-top:6px"><span class="num" id="sw-out" style="font-size:26px">0</span><span class="coin ton" id="sw-to">TON</span></div>
     </div>
-    <div class="info between"><span>Kurs contoh</span><span id="sw-rate"></span></div>
-    <button class="cta" disabled>Swap aktif setelah token diluncurkan</button>
+    <div class="info between"><span>Sample rate</span><span id="sw-rate"></span></div>
+    <button class="cta" disabled>Swap goes live after the token launches</button>
   </div>
 </section>
 
 <section class="tab" id="t-tasks">
   <div class="card">
-    <div class="between"><b>Check-in harian</b><span class="lbl" id="streak">0 hari beruntun</span></div>
+    <div class="between"><b>Daily check-in</b><span class="lbl" id="streak">0 day streak</span></div>
     <div class="week" id="week"></div>
     <div class="lbl" id="ci-note" style="margin-bottom:14px"></div>
-    <button class="cta" id="checkin">Check-in</button>
+    <button class="cta" id="checkin">Check in</button>
   </div>
   <div class="card" style="padding-bottom:4px">
-    <b>Tugas lainnya</b>
-    <div class="task" style="margin-top:10px"><span>Gabung channel resmi</span><span class="tag">Segera</span></div>
-    <div class="task"><span>Undang 3 teman</span><span class="tag">Segera</span></div>
+    <b>More tasks</b>
+    <div class="task" style="margin-top:10px"><span>Join the official channel<br><small id="tc-n"></small></span><span class="row" style="flex:none"><button class="mini" id="tc-open" hidden>Open</button><button class="mini" id="tc-go" disabled>Claim 30</button></span></div>
+    <div class="task"><span>Invite 3 active friends<br><small id="tk-p">0/3</small></span><button class="mini" id="tk-go" disabled>Claim 50</button></div>
   </div>
 </section>
 
 <section class="tab" id="t-friends">
   <div class="card">
-    <b>Undang teman</b>
-    <div class="lbl" style="margin-top:4px">Kamu dapat 5% dari setiap klaim mining teman.</div>
+    <b>Invite friends</b>
+    <div class="lbl" style="margin-top:4px">You earn <b id="fr-sh">5%</b> of every claim your friends mine.</div>
     <div class="linkbox" id="link"></div>
-    <div class="row"><button class="ghost" id="copy">Salin tautan</button><button class="cta" id="share">Bagikan</button></div>
+    <div class="row"><button class="ghost" id="copy">Copy link</button><button class="cta" id="share">Share</button></div>
   </div>
   <div class="stats" style="grid-template-columns:1fr 1fr;margin-top:0">
-    <div class="chip"><b id="inv">0</b><span>teman diundang</span></div>
-    <div class="chip"><b id="rinc">0</b><span>pendapatan RPM</span></div>
+    <div class="chip"><b id="inv">0</b><span>friends invited</span></div>
+    <div class="chip"><b id="rinc">0</b><span>RPM earned</span></div>
   </div>
 </section>
 
 <section class="tab" id="t-wallet">
-  <div class="card"><div class="between"><span class="lbl">Saldo Aplikasi</span><span class="tag">Dalam game</span></div>
+  <div class="card"><div class="between"><span class="lbl">App Balance</span><span class="tag">In-game</span></div>
     <div style="margin-top:8px"><span class="num mono" id="wbal" style="font-size:32px">0</span><span class="unit">RPM</span></div></div>
   <div class="stats" style="grid-template-columns:1fr 1fr;margin-top:0">
-    <div class="chip"><span class="ch">Total ditarik</span><b id="w-wd">0</b><span>RPM</span></div>
-    <div class="chip"><span class="ch">Sedang diproses</span><b id="w-pw">0</b><span>RPM</span></div>
+    <div class="chip"><span class="ch">Total withdrawn</span><b id="w-wd">0</b><span>RPM</span></div>
+    <div class="chip"><span class="ch">Processing</span><b id="w-pw">0</b><span>RPM</span></div>
   </div>
   <div class="card">
     <b>Wallet TON</b>
-    <div class="linkbox" id="w-addr">Belum terhubung</div>
-    <div class="row"><button class="cta" id="w-conn">Hubungkan wallet</button><button class="ghost" id="w-dis" hidden>Putuskan</button></div>
+    <div class="linkbox" id="w-addr">Not connected</div>
+    <div class="row"><button class="cta" id="w-conn">Connect wallet</button><button class="ghost" id="w-dis" hidden>Disconnect</button></div>
   </div>
   <div class="card">
-    <b>Tarik RPM</b>
+    <b>Withdraw RPM</b>
     <div class="box">
-      <div class="between"><span class="lbl">Jumlah</span><span class="lbl" id="w-min"></span></div>
+      <div class="between"><span class="lbl">Amount</span><span class="lbl" id="w-min"></span></div>
       <div class="between"><input id="w-amt" type="number" inputmode="decimal" min="0" placeholder="0"><span class="coin">RPM</span></div>
-      <div class="quick" id="w-quick"><button data-p="25">25%</button><button data-p="50">50%</button><button data-p="75">75%</button><button data-p="100">Maks</button></div>
+      <div class="quick" id="w-quick"><button data-p="25">25%</button><button data-p="50">50%</button><button data-p="75">75%</button><button data-p="100">Max</button></div>
     </div>
-    <div class="info">Permintaan masuk antrean dan diproses manual dalam 1–24 jam. Saldo langsung dikurangi, dan dikembalikan jika ditolak.</div>
-    <button class="cta" id="w-go" disabled>Tarik</button>
+    <div class="info">Requests are queued and processed manually within 1–24 hours. Your balance is deducted immediately and refunded if rejected.</div>
+    <button class="cta" id="w-go" disabled>Withdraw</button>
   </div>
 </section>
 
-<div class="demo" id="demo" hidden>Mode demo: server tidak terhubung, data disimpan di perangkat ini.</div>
+<div class="demo" id="demo" hidden>Demo mode: server not connected, data is stored on this device.</div>
 <div class="sheet" id="sheet"><div class="grid">
-  <button class="sv" data-go="tasks"><b>Tugas</b><span>Check-in harian</span></button>
-  <div class="sv off"><b>Staking</b><span>Segera hadir</span></div>
-  <div class="sv off"><b>Ambassador</b><span>Segera hadir</span></div>
-  <div class="sv off"><b>Rig Mining</b><span>Segera hadir</span></div>
+  <button class="sv" data-go="tasks"><b>Tasks</b><span>Daily check-in</span></button>
+  <button class="sv" data-go="stake"><b>Staking</b><span>Lock RPM, earn rewards</span></button>
+  <button class="sv" data-go="amb"><b>Ambassador</b><span>Bigger referral bonus</span></button>
+  <button class="sv" data-go="rig"><b>Rig Mining</b><span>Boost your speed</span></button>
 </div></div>
 <nav>
   <button class="on" data-t="mining"><svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>Mining</button>
   <button data-t="swap"><svg viewBox="0 0 24 24"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>Swap</button>
   <button class="mid" id="menuBtn" aria-label="Menu"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></i>Menu</button>
-  <button data-t="friends"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Teman</button>
-  <button data-t="wallet"><svg viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>Dompet</button>
+  <button data-t="friends"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Friends</button>
+  <button data-t="wallet"><svg viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>Wallet</button>
 </nav>
 
 <script>
-const botUrl=()=>"https://t.me/"+(S?.bot||"NAMA_BOT")+(S?.appShort?"/"+S.appShort:""); // diisi otomatis dari env server
+const botUrl=()=>"https://t.me/"+(S?.bot||"NAMA_BOT")+(S?.appShort?"/"+S.appShort:""); // filled automatically from server env
 const tg=window.Telegram?.WebApp; tg?.ready(); tg?.expand();
 tg?.setHeaderColor?.("#07090d"); tg?.setBackgroundColor?.("#07090d");
 const $=s=>document.querySelector(s);
 const fmt=(n,d=4)=>n.toLocaleString("en",{minimumFractionDigits:d,maximumFractionDigits:d});
-const fmtT=ms=>{const m=Math.ceil(ms/6e4);return Math.floor(m/60)+"j "+m%60+"m"};
-const C=703.7;
+const fmtT=ms=>{const m=Math.ceil(ms/6e4);return Math.floor(m/60)+"h "+m%60+"m"};
 let S=null, offset=0;
 
-// ---- API (server) dengan cadangan demo lokal ----
+// ---- API (server) with local demo fallback ----
 async function api(path,method="GET",body){
   let r;
   try{ r=await fetch("/api/"+path,{method,headers:{"x-init-data":tg?.initData||"","x-ref":tg?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get("ref")||"","content-type":"application/json"},body:body?JSON.stringify(body):undefined}); }
@@ -272,64 +320,112 @@ function demoApi(path,body){
   const today=new Date().toISOString().slice(0,10), now=Date.now();
   const lv=()=>LV.filter(x=>d.total>=x).length, rate=()=>10*(1+(lv()-1)*.25);
   if(path==="claim"){const a=rate()*Math.min(8,(now-d.last)/36e5);d.balance+=a;d.total+=a;d.last=now}
-  if(path==="checkin"){if(d.day===today)throw new Error("Sudah check-in hari ini.");d.streak++;d.balance+=10*Math.min(d.streak,7);d.day=today}
+  if(path==="checkin"){if(d.day===today)throw new Error("Already checked in today.");d.streak++;d.balance+=10*Math.min(d.streak,7);d.day=today}
   if(path==="wallet")d.wallet=body?.address||null;
-  if(path==="withdraw"){const a=Math.floor(Number(body?.amount)*100)/100;if(!d.wallet)throw new Error("Hubungkan wallet dulu.");if(!(a>=100))throw new Error("Minimal penarikan 100 RPM.");if(a>d.balance)throw new Error("Saldo tidak cukup.");d.balance-=a;d.pw+=a}
+  if(path==="withdraw"){const a=Math.floor(Number(body?.amount)*100)/100;if(!d.wallet)throw new Error("Connect your wallet first.");if(!(a>=100))throw new Error("Minimum withdrawal is 100 RPM.");if(a>d.balance)throw new Error("Insufficient balance.");d.balance-=a;d.pw+=a}
   localStorage.setItem("demo",JSON.stringify(d));
   const l=lv();
   return {balance:d.balance,total:d.total,level:l,prevAt:LV[l-1],nextAt:LV[l]??null,boost:1+(l-1)*.25,rate:rate(),last:d.last,maxHours:8,streak:d.streak,canCheckin:d.day!==today,nextReward:10*Math.min(d.streak+1,7),invited:0,refIncome:0,userId:0,serverNow:now,wallet:d.wallet||null,withdrawn:d.wd||0,pendingW:d.pw||0,minWithdraw:100};
 }
 
-// ---- Tampilan ----
+// ---- View ----
 const link=()=>S.appShort?`${botUrl()}?startapp=${S.userId}`:`${botUrl()}?start=${S.userId}`;
 function set(s){S=s;offset=s.serverNow-Date.now();try{if(tc&&s.bot)tc.uiOptions={actionsConfiguration:{twaReturnUrl:botUrl()}}}catch{}render()}
 function render(){
+  document.body.dataset.lv=S.level;
   $("#lvl").textContent="Lv "+S.level;
   $("#sh").textContent=fmt(S.rate,2);$("#sd").textContent=fmt(S.rate*24,1);$("#sb").textContent="×"+S.boost.toFixed(2);
-  $("#bal").textContent=fmt(S.balance);$("#wbal").textContent=fmt(S.balance,2);$("#w-wd").textContent=fmt(S.withdrawn||0,2);$("#w-pw").textContent=fmt(S.pendingW||0,2);$("#w-min").textContent="Minimal "+(S.minWithdraw||100)+" RPM";walletUI();
-  const LG=["Perunggu","Perak","Emas","Platinum","Berlian","Legenda"],ln=LG[Math.min(S.level,6)-1];
-  $("#lgp").textContent=ln;$("#lgn").textContent="Liga "+ln;$("#lgb").textContent=S.level;$("#lgl").textContent="Lv "+S.level;$("#lgt").textContent=fmt(S.total,2);
-  if(S.nextAt==null){$("#fill").style.width="100%";$("#lvpct").textContent="Maks";$("#lvltxt").textContent="Level maksimum";}
+  $("#bal").textContent=fmt(S.balance);$("#wbal").textContent=fmt(S.balance,2);$("#w-wd").textContent=fmt(S.withdrawn||0,2);$("#w-pw").textContent=fmt(S.pendingW||0,2);$("#w-min").textContent="Minimum "+(S.minWithdraw||100)+" RPM";walletUI();
+  const LG=["Bronze","Silver","Gold","Platinum","Diamond","Legend"],ln=LG[Math.min(S.level,6)-1];
+  $("#lgp").textContent=ln;$("#lgn").textContent="League "+ln;$("#lgb").textContent=S.level;$("#lgl").textContent="Lv "+S.level;$("#lgt").textContent=fmt(S.total,2);
+  if(S.nextAt==null){$("#fill").style.width="100%";$("#lvpct").textContent="Max";$("#lvltxt").textContent="Max level";}
   else{const p=Math.min(100,(S.total-S.prevAt)/(S.nextAt-S.prevAt)*100);
     $("#fill").style.width=p+"%";$("#lvpct").textContent=Math.floor(p)+"%";
-    $("#lvltxt").textContent=`${fmt(S.nextAt-S.total,0)} RPM lagi menuju Level ${S.level+1}`;}
-  $("#streak").textContent=S.streak+" hari beruntun";
+    $("#lvltxt").textContent=`${fmt(S.nextAt-S.total,0)} RPM to Level ${S.level+1}`;}
+  $("#streak").textContent=S.streak+" day streak";
   const done=S.canCheckin?S.streak%7:(S.streak?((S.streak-1)%7)+1:0);
   $("#week").innerHTML=[1,2,3,4,5,6,7].map(i=>`<div class="day ${i<=done?"done":(S.canCheckin&&i===done+1?"next":"")}">${i<=done?"✓":i}</div>`).join("");
   $("#checkin").disabled=!S.canCheckin;
-  $("#ci-note").textContent=S.canCheckin?`Hadiah hari ini: ${S.nextReward} RPM`:"Sudah check-in. Kembali besok.";
+  $("#ci-note").textContent=S.canCheckin?`Today's reward: ${S.nextReward} RPM`:"Checked in. Come back tomorrow.";
   $("#link").textContent=link();$("#inv").textContent=S.invited;$("#rinc").textContent=fmt(S.refIncome,2);
-  swapUI();tick();
+  rigUI();stakeUI();ambUI();taskUI();swapUI();tick();
 }
+function rigUI(){
+  const n=S.rigMax??0,r=S.rig||0,c=S.rigCost;
+  $("#rg-lv").textContent=n?`Level ${r} of ${n}`:"Unavailable";
+  $("#rg-b").textContent="×"+(S.rigBoost||1).toFixed(2);
+  $("#rigs").innerHTML=Array.from({length:n},(_,i)=>`<div class="st ${i<r?"on":i===r?"next":""}" style="height:${34+i*12}px"></div>`).join("");
+  $("#rg-nx").textContent=c==null?(n?"Maximum":"–"):`${fmt(S.rate,2)} → ${fmt(S.rate/S.rigBoost*S.nextRigBoost,2)} RPM/h`;
+  $("#rg-up").disabled=c==null||S.balance<c;
+  $("#rg-up").textContent=c==null?(n?"Max level":"Unavailable"):`Upgrade · ${fmt(c,0)} RPM`;
+  const a=S.activeInvited||0;$("#tk-p").textContent=a+"/3 active friends";
+  $("#tk-go").disabled=!!S.taskInvite||a<3;$("#tk-go").textContent=S.taskInvite?"Done":"Claim 50";
+}
+const fmtD=ms=>{const h=Math.ceil(ms/36e5);return h>=24?Math.floor(h/24)+"d "+h%24+"h":h+"h"};
+let stPlan=0;
+function stakeUI(){
+  const P=S.plans||[],p=P[stPlan],v=parseFloat($("#st-amt").value)||0,now=Date.now()+offset;
+  $("#st-plans").innerHTML=P.map((x,i)=>`<button class="plan ${i===stPlan?"on":""}" data-i="${i}"><b>${x.days} days</b><span>+${x.pct}%</span></button>`).join("")||'<div class="lbl">Unavailable</div>';
+  document.querySelectorAll("#st-plans .plan").forEach(b=>b.onclick=()=>{stPlan=+b.dataset.i;stakeUI()});
+  $("#st-tot").textContent=fmt(S.staked||0,2);$("#st-bal").textContent="Balance: "+fmt(S.balance,2)+" RPM";
+  $("#st-rw").textContent=p?fmt(Math.floor(v*p.pct)/100,2)+" RPM":"–";
+  $("#st-go").disabled=!p||v<(S.minStake||100)||v>S.balance;
+  $("#st-list").innerHTML=(S.stakes||[]).map(s=>{const ok=now>=s.end;return `<div class="task"><span>${fmt(s.amt,2)} RPM<br><small>${ok?"Ready to collect +"+fmt(s.reward,2):"Left "+fmtD(s.end-now)+" · +"+fmt(s.reward,2)}</small></span><button class="mini" data-id="${s.id}">${ok?"Collect":"Cancel"}</button></div>`}).join("")||'<div class="task">No stakes yet.</div>';
+  document.querySelectorAll("#st-list .mini").forEach(b=>b.onclick=()=>act("unstake",{id:+b.dataset.id}));
+}
+function ambUI(){
+  const A=S.amb;if(!A)return;
+  const cur=A.rank>=0?A.ranks[A.rank]:null,nx=A.ranks[A.rank+1]||null,base=cur?cur.need:0,p=nx?Math.min(100,(A.active-base)/(nx.need-base)*100):100;
+  $("#am-n").textContent=A.rank+1;$("#am-name").textContent=cur?cur.name:"No rank yet";
+  $("#am-sub").textContent=A.active+" active friends";$("#am-share").textContent="Referral bonus "+Math.round(A.share*100)+"%";$("#fr-sh").textContent=Math.round(A.share*100)+"%";
+  $("#am-fill").style.width=p+"%";$("#am-pct").textContent=nx?Math.floor(p)+"%":"Max";
+  $("#am-txt").textContent=nx?`${nx.need-A.active} more active friends to ${nx.name}`:"Top rank";
+  $("#am-list").innerHTML=A.ranks.map((r,i)=>`<div class="task"><span>${r.name}<br><small>${r.need} active friends · ${Math.round(r.share*100)}% bonus</small></span><span class="tag">${i<=A.rank?"Reached":"Locked"}</span></div>`).join("");
+}
+function taskUI(){const c=S.channel;$("#tc-n").textContent=c?"@"+c:"Not set";$("#tc-open").hidden=!c;$("#tc-go").disabled=!c||!!S.taskChannel;$("#tc-go").textContent=S.taskChannel?"Done":"Claim 30"}
+const cells=[...document.querySelectorAll("#bed .cell")];
+function bedUI(h){
+  cells.forEach((c,i)=>{const f=Math.max(0,Math.min(1,h-i));c.style.setProperty("--f",f.toFixed(3));c.classList.toggle("full",f>=1);c.classList.toggle("on",f>0&&f<1)});
+  $("#bed").classList.toggle("full",h>=S.maxHours);
+}
+function wave(c){const b=$("#bed");b.classList.remove("tap","harvest");void b.offsetWidth;b.classList.add(c);setTimeout(()=>b.classList.remove(c),900)}
 function tick(){
   if(!S)return;
   const h=Math.max(0,Math.min(S.maxHours,(Date.now()+offset-S.last)/36e5)), p=S.rate*h, f=h/S.maxHours;
   $("#pend").textContent="+"+fmt(p);
-  $("#prg").style.strokeDashoffset=C*(1-f);
+  bedUI(h);
   $("#pct").textContent=Math.round(f*100)+"%";
-  const c=$("#claim");c.disabled=p<0.01;c.textContent=`Klaim ${fmt(p)} RPM`;
-  $("#cap").textContent=h>=S.maxHours?"Penampung penuh. Klaim agar mining berjalan lagi.":`Penampung penuh dalam ${fmtT((S.maxHours-h)*36e5)}`;
+  const c=$("#claim");c.disabled=p<0.01;c.textContent=`Claim ${fmt(p)} RPM`;
+  $("#cap").textContent=h>=S.maxHours?"Storage full. Claim to resume mining.":`Storage full in ${fmtT((S.maxHours-h)*36e5)}`;
 }
 async function act(path,body){
   try{set(await api(path,"POST",body));return true}catch(e){tg?.showAlert?tg.showAlert(e.message):alert(e.message);return false}
 }
 function burst(t){const e=document.createElement("div");e.className="burst";e.textContent=t;$(".hero").append(e);setTimeout(()=>e.remove(),1100)}
-$("#claim").onclick=async()=>{const t=$("#pend").textContent;if(await act("claim")){tg?.HapticFeedback?.notificationOccurred("success");burst(t+" RPM")}};
+$("#claim").onclick=async()=>{const t=$("#pend").textContent;if(await act("claim")){tg?.HapticFeedback?.notificationOccurred("success");wave("harvest");burst(t+" RPM")}};
 $("#checkin").onclick=()=>act("checkin");
-$("#copy").onclick=async()=>{await navigator.clipboard.writeText(link());$("#copy").textContent="Tersalin";setTimeout(()=>$("#copy").textContent="Salin tautan",1500)};
-$("#share").onclick=()=>{const u="https://t.me/share/url?url="+encodeURIComponent(link())+"&text="+encodeURIComponent("Ayo mining RPM bareng aku di Rupa Mine!");tg?.openTelegramLink?tg.openTelegramLink(u):window.open(u)};
+$("#rg-up").onclick=async()=>{if(await act("rig"))tg?.HapticFeedback?.notificationOccurred("success")};
+$("#tk-go").onclick=()=>act("task/invite");
+$("#tc-go").onclick=()=>act("task/channel");
+$("#tc-open").onclick=()=>{const u="https://t.me/"+S.channel;tg?.openTelegramLink?tg.openTelegramLink(u):window.open(u)};
+$("#st-amt").oninput=stakeUI;
+document.querySelectorAll("#st-quick button").forEach(b=>b.onclick=()=>{$("#st-amt").value=Math.floor(S.balance*b.dataset.p)/100;stakeUI()});
+$("#st-go").onclick=async()=>{if(await act("stake",{amount:parseFloat($("#st-amt").value),days:S.plans[stPlan].days}))$("#st-amt").value=""};
+$("#hero").onclick=()=>{wave("tap");tg?.HapticFeedback?.impactOccurred?.("light")};
+$("#copy").onclick=async()=>{await navigator.clipboard.writeText(link());$("#copy").textContent="Copied";setTimeout(()=>$("#copy").textContent="Copy link",1500)};
+$("#share").onclick=()=>{const u="https://t.me/share/url?url="+encodeURIComponent(link())+"&text="+encodeURIComponent("Come mine RPM with me on Rupa Mine!");tg?.openTelegramLink?tg.openTelegramLink(u):window.open(u)};
 function go(t){document.querySelectorAll("nav button[data-t],.tab").forEach(e=>e.classList.remove("on"));$("#t-"+t).classList.add("on");const b=document.querySelector('nav button[data-t="'+t+'"]');if(b)b.classList.add("on");sheet(false);scrollTo(0,0)}
 function sheet(o){$("#sheet").classList.toggle("show",o);$("#menuBtn").classList.toggle("open",o)}
 document.querySelectorAll("nav button[data-t],[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.t||b.dataset.go));
 $("#menuBtn").onclick=()=>sheet(!$("#sheet").classList.contains("show"));
-// ---- Swap (pratinjau; belum terhubung ke pool) ----
-const SWAP_RATE=2500; // CONTOH: 1 TON = 2.500 RPM. Ganti dengan harga pool nyata setelah token diluncurkan.
+// ---- Swap (preview; not connected to a pool yet) ----
+const SWAP_RATE=2500; // SAMPLE: 1 TON = 2,500 RPM. Replace with the real pool price after the token launches.
 let dir=0;
 function swapCalc(){const v=parseFloat($("#sw-in").value)||0;$("#sw-out").textContent=fmt(dir?v*SWAP_RATE:v/SWAP_RATE,dir?2:6)}
 function swapUI(){
   $("#sw-from").textContent=dir?"TON":"RPM";$("#sw-to").textContent=dir?"RPM":"TON";
   $("#sw-from").classList.toggle("ton",!!dir);$("#sw-to").classList.toggle("ton",!dir);
-  $("#sw-bal").textContent=dir?"Dompet belum terhubung":"Saldo: "+fmt(S?S.balance:0,2)+" RPM";
+  $("#sw-bal").textContent=dir?"Wallet not connected":"Balance: "+fmt(S?S.balance:0,2)+" RPM";
   $("#sw-quick").style.display=dir?"none":"flex";
   $("#sw-rate").textContent="1 TON = "+fmt(SWAP_RATE,0)+" RPM";
   swapCalc();
@@ -339,19 +435,19 @@ $("#sw-flip").onclick=()=>{dir^=1;swapUI()};
 document.querySelectorAll("#sw-quick button").forEach(b=>b.onclick=()=>{$("#sw-in").value=((S?S.balance:0)*b.dataset.p/100).toFixed(2);swapCalc()});
 swapUI();
 setInterval(tick,100);
-// ---- Dompet: TON Connect + tarik ----
+// ---- Wallet: TON Connect + withdraw ----
 const msg=m=>tg?.showAlert?tg.showAlert(m):alert(m);
 const shortA=a=>a.slice(0,5)+"…"+a.slice(-5);
 const friendly=a=>{try{return TON_CONNECT_UI.toUserFriendlyAddress(a)}catch{return a}};
-function walletUI(){const w=S&&S.wallet;$("#w-addr").textContent=w?shortA(w):"Belum terhubung";$("#w-conn").hidden=!!w;$("#w-dis").hidden=!w;$("#w-go").disabled=!w}
+function walletUI(){const w=S&&S.wallet;$("#w-addr").textContent=w?shortA(w):"Not connected";$("#w-conn").hidden=!!w;$("#w-dis").hidden=!w;$("#w-go").disabled=!w}
 let tc=null;
 try{
   tc=new TON_CONNECT_UI.TonConnectUI({manifestUrl:location.origin+"/tonconnect-manifest.json",actionsConfiguration:{twaReturnUrl:botUrl()}});
   tc.onStatusChange(w=>{if(w&&S){const a=friendly(w.account.address);if(S.wallet!==a)act("wallet",{address:a})}});
-}catch(e){console.warn("TON Connect tidak tersedia",e)}
-$("#w-conn").onclick=()=>tc?tc.openModal():msg("TON Connect tidak tersedia. Muat ulang halaman.");
+}catch(e){console.warn("TON Connect unavailable",e)}
+$("#w-conn").onclick=()=>tc?tc.openModal():msg("TON Connect is unavailable. Reload the page.");
 $("#w-dis").onclick=async()=>{try{await tc?.disconnect()}catch{}act("wallet",{address:null})};
 document.querySelectorAll("#w-quick button").forEach(b=>b.onclick=()=>{$("#w-amt").value=Math.floor((S?S.balance:0)*b.dataset.p)/100});
-$("#w-go").onclick=async()=>{if(await act("withdraw",{amount:parseFloat($("#w-amt").value)})){$("#w-amt").value="";msg("Permintaan penarikan dikirim. Diproses dalam 1–24 jam.")}};
+$("#w-go").onclick=async()=>{if(await act("withdraw",{amount:parseFloat($("#w-amt").value)})){$("#w-amt").value="";msg("Withdrawal request sent. Processed within 1–24 hours.")}};
 api("me").then(s=>{set(s);const w=tc?.wallet;if(w){const a=friendly(w.account.address);if(s.wallet!==a)act("wallet",{address:a})}}).catch(e=>alert(e.message));
 </script></body></html>
