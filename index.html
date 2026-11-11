@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="id"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rupa Mine</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--line:#242a36;--gold:#e8a93c;--gold2:#f6d27a;--text:#f2efe8;--mute:#8b92a1;--ok:#5bd68a}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.4 Sora,system-ui,sans-serif;min-height:100vh;padding:16px 16px calc(96px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.02em}
+.pill{border:1px solid var(--gold);color:var(--gold2);border-radius:99px;padding:4px 12px;font-weight:600;font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.mine{border-color:#5a4520;background:linear-gradient(160deg,#1a1710,var(--card) 60%)}
+.lbl{color:var(--mute);font-size:13px}
+.big{font-weight:800;font-size:34px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.unit{color:var(--gold);font-size:14px;font-weight:600;margin-left:6px}
+.bar{height:8px;border-radius:9px;background:#1d222c;overflow:hidden;margin:14px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ok),var(--gold));transition:width .4s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stats .card{margin:0;padding:12px;text-align:center}
+.stats b{display:block;font-size:17px;margin-top:2px}
+button{font:inherit;cursor:pointer}
+.cta{width:100%;border:0;border-radius:14px;padding:14px;font-weight:800;color:#1b1405;background:linear-gradient(180deg,var(--gold2),var(--gold))}
+.cta:disabled{opacity:.4;cursor:default}
+.ghost{border:1px solid var(--line);background:none;color:var(--text);border-radius:14px;padding:12px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+nav{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;background:#10131a;border:1px solid var(--line);border-radius:20px;padding:6px}
+nav button{flex:1;border:0;background:none;color:var(--mute);padding:12px 0;border-radius:14px;font-weight:600}
+nav button.on{color:var(--gold2);background:#1b1f29}
+.tab{display:none}.tab.on{display:block}
+.link{font-weight:600;font-size:13px;word-break:break-all;margin:10px 0}
+.demo{color:var(--mute);font-size:12px;text-align:center;margin-top:10px}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+</style></head><body>
+<header class="top"><div class="logo">Rupa Mine</div><div class="pill" id="lvl">Lv –</div></header>
+
+<section class="tab on" id="t-mining">
+  <div class="card"><div class="lbl">Saldo</div><div><span class="big" id="bal">0.0000</span><span class="unit">RPM</span></div></div>
+  <div class="card mine">
+    <div class="lbl">Hasil mining belum diklaim</div>
+    <div><span class="big" id="pend" style="color:var(--ok)">+0.0000</span><span class="unit">RPM</span></div>
+    <div class="bar"><i id="fill"></i></div>
+    <div class="lbl" id="lvltxt"></div>
+  </div>
+  <div class="stats">
+    <div class="card"><span class="lbl">Per jam</span><b id="sh">–</b></div>
+    <div class="card"><span class="lbl">Per hari</span><b id="sd">–</b></div>
+    <div class="card"><span class="lbl">Boost</span><b id="sb">–</b></div>
+  </div>
+  <button class="cta" id="claim" style="margin-top:12px" disabled>Klaim</button>
+  <div class="lbl" id="cap" style="text-align:center;margin-top:8px"></div>
+</section>
+
+<section class="tab" id="t-tasks">
+  <div class="card">
+    <div class="lbl">Check-in harian</div>
+    <div class="big" id="streak" style="font-size:26px;margin-top:4px">0 hari beruntun</div>
+    <div class="lbl" id="ci-note" style="margin:6px 0 14px"></div>
+    <button class="cta" id="checkin">Check-in</button>
+  </div>
+</section>
+
+<section class="tab" id="t-friends">
+  <div class="card">
+    <div class="lbl">Undang teman dan dapatkan 5% dari klaim mereka.</div>
+    <div class="link" id="link"></div>
+    <div class="row"><button class="ghost" id="copy">Salin tautan</button><button class="cta" id="share">Bagikan</button></div>
+  </div>
+  <div class="stats" style="grid-template-columns:1fr 1fr">
+    <div class="card"><span class="lbl">Teman diundang</span><b id="inv">0</b></div>
+    <div class="card"><span class="lbl">Pendapatan referral</span><b id="rinc">0</b></div>
+  </div>
+</section>
+
+<div class="demo" id="demo" hidden>Mode demo: server tidak terhubung, data disimpan di perangkat ini.</div>
+<nav>
+  <button class="on" data-t="mining">Mining</button>
+  <button data-t="tasks">Tugas</button>
+  <button data-t="friends">Teman</button>
+</nav>
+
+<script>
+const BOT_LINK="https://t.me/NAMA_BOT/NAMA_APP"; // ganti dengan link Mini App kamu
+const tg=window.Telegram?.WebApp; tg?.ready(); tg?.expand();
+const $=s=>document.querySelector(s);
+const fmt=(n,d=4)=>n.toLocaleString("en",{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmtT=ms=>{const m=Math.ceil(ms/6e4);return Math.floor(m/60)+"j "+m%60+"m"};
+let S=null, offset=0;
+
+// ---- API (server) dengan cadangan demo lokal ----
+async function api(path,method="GET"){
+  let r;
+  try{ r=await fetch("/api/"+path,{method,headers:{"x-init-data":tg?.initData||"","x-ref":tg?.initDataUnsafe?.start_param||""}}); }
+  catch{ return demoApi(path); }
+  if(r.status===404) return demoApi(path);
+  const j=await r.json(); if(!r.ok) throw new Error(j.error); return j;
+}
+const LV=[0,100,300,800,2000,5000];
+function demoApi(path){
+  $("#demo").hidden=false;
+  const d=JSON.parse(localStorage.getItem("demo")||"null")||{balance:0,total:0,last:Date.now()-3*36e5,streak:0,day:""};
+  const today=new Date().toISOString().slice(0,10), now=Date.now();
+  const lv=()=>LV.filter(x=>d.total>=x).length, rate=()=>10*(1+(lv()-1)*.25);
+  if(path==="claim"){const a=rate()*Math.min(8,(now-d.last)/36e5);d.balance+=a;d.total+=a;d.last=now}
+  if(path==="checkin"){if(d.day===today)throw new Error("Sudah check-in hari ini.");d.streak++;d.balance+=10*Math.min(d.streak,7);d.day=today}
+  localStorage.setItem("demo",JSON.stringify(d));
+  const l=lv();
+  return {balance:d.balance,total:d.total,level:l,prevAt:LV[l-1],nextAt:LV[l]??null,boost:1+(l-1)*.25,rate:rate(),last:d.last,maxHours:8,streak:d.streak,canCheckin:d.day!==today,nextReward:10*Math.min(d.streak+1,7),invited:0,refIncome:0,userId:0,serverNow:now};
+}
+
+// ---- Tampilan ----
+const link=()=>`${BOT_LINK}?startapp=${S.userId}`;
+function set(s){S=s;offset=s.serverNow-Date.now();render()}
+function render(){
+  $("#lvl").textContent="Lv "+S.level;
+  $("#sh").textContent=fmt(S.rate,2);$("#sd").textContent=fmt(S.rate*24,1);$("#sb").textContent="×"+S.boost.toFixed(2);
+  $("#bal").textContent=fmt(S.balance);
+  if(S.nextAt==null){$("#fill").style.width="100%";$("#lvltxt").textContent="Level maksimum";}
+  else{const p=Math.min(100,(S.total-S.prevAt)/(S.nextAt-S.prevAt)*100);
+    $("#fill").style.width=p+"%";
+    $("#lvltxt").textContent=`Menuju Level ${S.level+1}: ${fmt(S.nextAt-S.total,0)} RPM lagi (${Math.floor(p)}%)`;}
+  $("#streak").textContent=S.streak+" hari beruntun";
+  $("#checkin").disabled=!S.canCheckin;
+  $("#ci-note").textContent=S.canCheckin?`Hadiah hari ini: ${S.nextReward} RPM`:"Sudah check-in. Kembali besok.";
+  $("#link").textContent=link();$("#inv").textContent=S.invited;$("#rinc").textContent=fmt(S.refIncome,2);
+  tick();
+}
+function tick(){
+  if(!S)return;
+  const h=Math.max(0,Math.min(S.maxHours,(Date.now()+offset-S.last)/36e5)), p=S.rate*h;
+  $("#pend").textContent="+"+fmt(p);
+  const c=$("#claim");c.disabled=p<0.01;c.textContent=`Klaim ${fmt(p)} RPM`;
+  $("#cap").textContent=h>=S.maxHours?"Penampung penuh. Klaim agar mining berjalan lagi.":`Penampung penuh dalam ${fmtT((S.maxHours-h)*36e5)}`;
+}
+async function act(path){
+  try{set(await api(path,"POST"))}catch(e){tg?.showAlert?tg.showAlert(e.message):alert(e.message)}
+}
+$("#claim").onclick=()=>act("claim");
+$("#checkin").onclick=()=>act("checkin");
+$("#copy").onclick=async()=>{await navigator.clipboard.writeText(link());$("#copy").textContent="Tersalin";setTimeout(()=>$("#copy").textContent="Salin tautan",1500)};
+$("#share").onclick=()=>{const u="https://t.me/share/url?url="+encodeURIComponent(link())+"&text="+encodeURIComponent("Ayo mining RPM bareng aku!");tg?.openTelegramLink?tg.openTelegramLink(u):window.open(u)};
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav button,.tab").forEach(e=>e.classList.remove("on"));
+  b.classList.add("on");$("#t-"+b.dataset.t).classList.add("on");
+});
+setInterval(tick,100);
+api("me").then(set).catch(e=>alert(e.message));
+</script></body></html>

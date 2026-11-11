@@ -1,0 +1,6 @@
+{
+  "name": "rupa-mine",
+  "type": "module",
+  "scripts": { "start": "node server.js", "dev": "DEV=1 node server.js" },
+  "dependencies": { "express": "^4.19.2" }
+}
