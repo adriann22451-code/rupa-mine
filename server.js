@@ -12,6 +12,7 @@ const DIR = path.dirname(fileURLToPath(import.meta.url));
 // Di Vercel hanya /tmp yang bisa ditulis dan datanya TIDAK permanen. Ganti ke database sungguhan (Upstash/Supabase) sebelum dipakai user.
 const DB_FILE = process.env.VERCEL ? "/tmp/db.json" : path.join(DIR, "db.json");
 const db = fs.existsSync(DB_FILE) ? JSON.parse(fs.readFileSync(DB_FILE)) : { users: {} };
+db.withdrawals ||= [];
 const save = () => fs.writeFileSync(DB_FILE, JSON.stringify(db));
 
 // Aturan mining (semua dihitung di server)
@@ -19,6 +20,8 @@ const BASE_RATE = 10;                       // RPM per jam
 const MAX_HOURS = 8;                        // batas penampung sebelum harus klaim
 const LEVELS = [0, 100, 300, 800, 2000, 5000]; // total mining untuk Level 1..6
 const REF_SHARE = 0.05;
+const MIN_WITHDRAW = 100;                   // minimal tarik (RPM)
+const ADMIN_KEY = process.env.ADMIN_KEY || "";
 const level = (t) => LEVELS.filter((x) => t >= x).length;
 const boost = (lv) => 1 + (lv - 1) * 0.25;
 const rate = (u) => BASE_RATE * boost(level(u.total));
@@ -41,7 +44,7 @@ function verify(initData) {
 function getUser(id, ref) {
   let u = db.users[id];
   if (!u) {
-    u = db.users[id] = { id, balance: 0, total: 0, last: Date.now(), streak: 0, day: "", invited: [], refIncome: 0, ref: null };
+    u = db.users[id] = { id, balance: 0, total: 0, last: Date.now(), streak: 0, day: "", invited: [], refIncome: 0, ref: null, wallet: null, withdrawn: 0 };
     const r = db.users[ref];
     if (r && r.id !== id) { u.ref = r.id; r.invited.push(id); }
     save();
@@ -57,11 +60,14 @@ const userState = (u) => {
     streak: done || cont ? u.streak : 0, canCheckin: !done,
     nextReward: 10 * Math.min((cont ? u.streak : 0) + 1, 7),
     invited: u.invited.length, refIncome: u.refIncome, userId: u.id, serverNow: Date.now(),
+    wallet: u.wallet ?? null, withdrawn: u.withdrawn || 0, minWithdraw: MIN_WITHDRAW,
+    pendingW: db.withdrawals.filter((w) => w.uid === u.id && w.status === "pending").reduce((a, w) => a + w.amount, 0),
   };
 };
 
 const app = express();
 app.use(express.static(path.join(DIR, "public")));
+app.use(express.json());
 app.get("/", (req, res) => res.sendFile(path.join(DIR, "public", "index.html")));
 
 app.use("/api", (req, res, next) => {
@@ -90,6 +96,45 @@ app.post("/api/checkin", (req, res) => {
   u.day = today;
   save();
   res.json(userState(u));
+});
+
+
+// ---- Tahap 2: wallet & penarikan ----
+const ADDR = /^([A-Za-z0-9_-]{48}|-?\d+:[0-9a-fA-F]{64})$/;
+app.post("/api/wallet", (req, res) => {
+  const a = req.body?.address ?? null;
+  if (a !== null && !ADDR.test(a)) return res.status(400).json({ error: "Alamat wallet tidak valid." });
+  req.user.wallet = a;
+  save();
+  res.json(userState(req.user));
+});
+
+app.post("/api/withdraw", (req, res) => {
+  // Di Vercel data hanya di /tmp (tidak permanen): penarikan dimatikan kecuali sengaja untuk uji coba.
+  if (process.env.VERCEL && process.env.ALLOW_EPHEMERAL !== "1")
+    return res.status(503).json({ error: "Penarikan belum aktif: penyimpanan server belum permanen." });
+  const u = req.user, amt = Math.floor(Number(req.body?.amount) * 100) / 100;
+  if (!u.wallet) return res.status(400).json({ error: "Hubungkan wallet dulu." });
+  if (!(amt >= MIN_WITHDRAW)) return res.status(400).json({ error: `Minimal penarikan ${MIN_WITHDRAW} RPM.` });
+  if (amt > u.balance) return res.status(400).json({ error: "Saldo tidak cukup." });
+  u.balance -= amt;
+  db.withdrawals.push({ id: db.withdrawals.length + 1, uid: u.id, amount: amt, address: u.wallet, status: "pending", at: Date.now() });
+  save();
+  res.json(userState(u));
+});
+
+// ---- Admin (isi env ADMIN_KEY). Contoh: GET /admin/withdrawals?key=...  lalu POST /admin/withdrawals/1/done?key=... ----
+const admin = (q, r, n) => (ADMIN_KEY && q.query.key === ADMIN_KEY ? n() : r.status(403).json({ error: "forbidden" }));
+app.get("/admin/withdrawals", admin, (q, r) => r.json(db.withdrawals.filter((w) => w.status === "pending")));
+app.post("/admin/withdrawals/:id/:act", admin, (q, r) => {
+  const w = db.withdrawals.find((x) => x.id == q.params.id);
+  if (!w || w.status !== "pending") return r.status(404).json({ error: "tidak ditemukan" });
+  const u = db.users[w.uid];
+  if (q.params.act === "done") { w.status = "done"; u.withdrawn = (u.withdrawn || 0) + w.amount; }
+  else if (q.params.act === "reject") { w.status = "rejected"; u.balance += w.amount; }
+  else return r.status(400).json({ error: "aksi: done atau reject" });
+  save();
+  r.json(w);
 });
 
 if (!process.env.VERCEL) app.listen(process.env.PORT || 3000, () => console.log("Rupa Mine jalan di port", process.env.PORT || 3000));
